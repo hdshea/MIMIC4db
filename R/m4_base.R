@@ -6,7 +6,8 @@ NULL
 #' Wrapper around DBI functions to send a \code{SELECT} statement, fetch the results
 #' and return them in a tibble.
 #'
-#' @param con A DBIConnection object, as returned by [DBI::dbConnect()].
+#' @param con A DBIConnection object, as returned by [DBI::dbConnect()] object with an appropriate
+#' [bigrquery](https://github.com/r-dbi/bigrquery) DBIConnection.
 #' @param select_statement a character string representing a SQL \code{SELECT} statement.
 #'
 #' @returns a tibble with the results.
