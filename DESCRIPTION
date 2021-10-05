@@ -1,0 +1,16 @@
+Package: MIMIC4db
+Title: Package for building, loading and referencing the Google BigQuery verion of the MIMIC-IV
+Version: 0.0.0.9000
+Authors@R: 
+    person("H. David", "Shea", , "hdshea@comcast.net", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: This package provides a tightly bound set of routines access the Google BigQuery version 
+    of the MIMIC IV database.  These access routines include metadata definitions, base data access functions,
+    and higher level data access functions that encapsulate common patterns for data access for research
+    data analytic processes.
+Depends: R (>= 3.5.0)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
