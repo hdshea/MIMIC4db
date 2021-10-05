@@ -6,18 +6,23 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of MIMIC4db is to …
+This work references data from the Medical Information Mart for
+Intensive Care MIMIC-IV database. MIMIC-IV is a large, freely-available
+database comprising de-identified health-related data from patients who
+were admitted to the critical care units of the Beth Israel Deaconess
+Medical Center from 2001-2019. Detailed information can be obtained on
+the [MIMIC-IV website](https://mimic.mit.edu/docs/iv/).
+
+MIMIC4db provides a tightly bound set of routines to reference the
+Google BigQuery version of the [MIMIC-IV
+v1.0](https://physionet.org/content/mimiciii/1.0/) database using base
+access routines from the [DBI](https://github.com/r-dbi/DBI) R package
+with an appropriate [bigrquery](https://github.com/r-dbi/bigrquery)
+DBIConnection.
 
 ## Installation
 
-You can install the released version of MIMIC4db from
-[CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("MIMIC4db")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can install MIMIC4db from GitHub with:
 
 ``` r
 # install.packages("devtools")
@@ -32,30 +37,3 @@ This is a basic example which shows you how to solve a common problem:
 library(MIMIC4db)
 ## basic example code
 ```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/master/examples>.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
