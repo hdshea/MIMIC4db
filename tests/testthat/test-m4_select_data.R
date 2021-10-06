@@ -5,8 +5,9 @@ test_that("m4_select_data works", {
         quiet = TRUE
     )
 
-    dat <- m4_select_data(con, "select * from physionet-data.mimic_icu.d_items limit 5")
-    expect_equal(2 * 2, 4)
+    dat <- m4_select_data(con, "select * from physionet-data.mimic_icu.d_items order by itemid limit 5") %>%
+        dplyr::arrange(itemid)
+    expect_equal(hds_t_dat, dat)
 
     bigrquery::dbDisconnect(con)
 })

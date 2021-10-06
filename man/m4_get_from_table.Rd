@@ -22,10 +22,10 @@ where clause.
 }
 \examples{
 con <- bigrquery::dbConnect(
-   bigrquery::bigquery(),
+    bigrquery::bigquery(),
     project = bigrquery::bq_test_project(),
     quiet = TRUE
 )
-m4_get_from_table(con, "physionet-data.mimic_icu.d_items", where = "where itemid <= 223938")
+m4_get_from_table(con, "physionet-data.mimic_icu.d_items", where = "where itemid <= 220048")
 bigrquery::dbDisconnect(con)
 }
