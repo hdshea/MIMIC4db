@@ -20,5 +20,14 @@ Wrapper around DBI functions to send a \code{SELECT} statement, fetch the result
 and return them in a tibble.
 }
 \examples{
-x <- 5
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
+con <- bigrquery::dbConnect(
+   bigrquery::bigquery(),
+    project = bigrquery::bq_test_project(),
+    quiet = TRUE
+)
+m4_select_data(con, "select * from physionet-data.mimic_icu.d_items limit 5")
+bigrquery::dbDisconnect(con)
 }

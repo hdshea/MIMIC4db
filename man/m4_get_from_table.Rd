@@ -21,5 +21,11 @@ Helper function to perform a basic \code{SELECT *} from the noted table projecte
 where clause.
 }
 \examples{
-x <- 5
+con <- bigrquery::dbConnect(
+   bigrquery::bigquery(),
+    project = bigrquery::bq_test_project(),
+    quiet = TRUE
+)
+m4_get_from_table(con, "physionet-data.mimic_icu.d_items", where = "where itemid <= 223938")
+bigrquery::dbDisconnect(con)
 }

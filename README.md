@@ -35,5 +35,9 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(MIMIC4db)
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
+
 ## basic example code
 ```
