@@ -7,8 +7,8 @@
 m4_d_labitems(con, ...)
 }
 \arguments{
-\item{con}{A DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}} object with an appropriate
-\href{https://github.com/r-dbi/bigrquery}{bigrquery} DBIConnection.}
+\item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
+with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{...}{additional optional passed along parameters.}
 }
@@ -16,6 +16,10 @@ m4_d_labitems(con, ...)
 a tibble with the results.
 }
 \description{
+This function provides base access to the d_labitems table which defines concepts recorded in the
+labevents table in the hospital module.
+}
+\details{
 (PKEY \code{itemid})
 }
 \examples{

@@ -7,8 +7,8 @@
 m4_datetimeevents(con, cohort = NULL, ...)
 }
 \arguments{
-\item{con}{A DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}} object with an appropriate
-\href{https://github.com/r-dbi/bigrquery}{bigrquery} DBIConnection.}
+\item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
+with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{cohort}{an optional vector of patient IDs defining the cohort of interest}
 
@@ -18,6 +18,13 @@ m4_datetimeevents(con, cohort = NULL, ...)
 a tibble with the results.
 }
 \description{
+This function provides base access to the datetimeevents table containing data which represents all
+date measurements about a patient in the ICU.
+}
+\details{
+For example, the date of last dialysis would be in the DATETIMEEVENTS table, but the systolic blood
+pressure would not be in this table.
+
 (PKEY \code{subject_id}, \code{hadm_id}, \code{stay_id})
 }
 \examples{

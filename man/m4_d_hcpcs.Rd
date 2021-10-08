@@ -2,13 +2,13 @@
 % Please edit documentation in R/m4_dimensions.R
 \name{m4_d_hcpcs}
 \alias{m4_d_hcpcs}
-\title{Access imension table for hcpcsevents; provides a description of CPT codes}
+\title{Access dimension table for hcpcsevents; provides a description of CPT codes}
 \usage{
 m4_d_hcpcs(con, ...)
 }
 \arguments{
-\item{con}{A DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}} object with an appropriate
-\href{https://github.com/r-dbi/bigrquery}{bigrquery} DBIConnection.}
+\item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
+with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{...}{additional optional passed along parameters.}
 }
@@ -16,6 +16,10 @@ m4_d_hcpcs(con, ...)
 a tibble with the results.
 }
 \description{
+This function provides base access to the d_hcpcs table which defines concepts recorded in the hcpcsevents
+table in the hospital module.
+}
+\details{
 (PKEY \code{code})
 }
 \examples{

@@ -7,7 +7,8 @@
 m4_get_from_table(con, table, where = NULL)
 }
 \arguments{
-\item{con}{A DBIConnection object, as returned by dbConnect().}
+\item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
+with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{table}{a character string representing a valid MIMIC-IV table name.}
 
@@ -26,6 +27,8 @@ con <- bigrquery::dbConnect(
     project = bigrquery::bq_test_project(),
     quiet = TRUE
 )
+
 m4_get_from_table(con, "physionet-data.mimic_icu.d_items", where = "where itemid <= 220048")
+
 bigrquery::dbDisconnect(con)
 }

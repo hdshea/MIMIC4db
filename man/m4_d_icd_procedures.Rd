@@ -7,8 +7,8 @@
 m4_d_icd_procedures(con, ...)
 }
 \arguments{
-\item{con}{A DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}} object with an appropriate
-\href{https://github.com/r-dbi/bigrquery}{bigrquery} DBIConnection.}
+\item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
+with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{...}{additional optional passed along parameters.}
 }
@@ -17,6 +17,10 @@ a tibble with the results.
 }
 \description{
 (PKEY \code{icd_code}, \code{icd_version})
+}
+\details{
+This function provides base access to the d_icd_procedures table which defines concepts recorded in the
+procedures_icd table in the hospital module.
 }
 \examples{
 con <- bigrquery::dbConnect(

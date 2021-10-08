@@ -7,8 +7,8 @@
 m4_admissions(con, cohort = NULL, ...)
 }
 \arguments{
-\item{con}{A DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}} object with an appropriate
-\href{https://github.com/r-dbi/bigrquery}{bigrquery} DBIConnection.}
+\item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
+with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{cohort}{an optional vector of patient IDs defining the cohort of interest}
 
@@ -18,6 +18,12 @@ m4_admissions(con, cohort = NULL, ...)
 a tibble with the results.
 }
 \description{
+This function provides base access to the admissions table containing information regarding a patient’s
+admission to the hospital. Since each unique hospital visit for a patient is assigned a unique \code{hadm_id},
+the admissions table can be considered as a definition table for \code{hadm_id}. Information available includes
+timing information for admission and discharge, demographic information, the source of the admission, and so on.
+}
+\details{
 (PKEY \code{hadm_id})
 }
 \examples{

@@ -1,7 +1,7 @@
 # These are the direct table access functions for the icu module tables
 #
 # In the m4_ base table and common pattern functions, the concept of a cohort is a group of subjects identified
-# by numeric SUBJECT_IDs.
+# by numeric subject IDs.
 #
 # A cohort can be:
 #
@@ -22,7 +22,11 @@ NULL
 
 #' Access charted items occurring during the ICU stay
 #'
-#' This table contains the majority of information documented in the ICU
+#' This function provides base access to the chartevents table containing data representing all the charted data
+#' available for a patient. During their ICU stay, the primary repository of a patient’s information is their
+#' electronic chart. The electronic chart displays patients' routine vital signs and any additional information
+#' relevant to their care: ventilator settings, laboratory values, code status, mental status, and so on.
+#' As a result, the bulk of information about a patient’s stay is contained in chartevents.
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
@@ -51,6 +55,12 @@ m4_chartevents <- function(con, cohort = NULL, ...) {
 
 #' Access documented information which is in a date format (e.g. date of last dialysis)
 #'
+#' This function provides base access to the datetimeevents table containing data which represents all
+#' date measurements about a patient in the ICU.
+#'
+#' For example, the date of last dialysis would be in the DATETIMEEVENTS table, but the systolic blood
+#' pressure would not be in this table.
+#'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
 #' @inheritParams m4_patients
@@ -77,6 +87,9 @@ m4_datetimeevents <- function(con, cohort = NULL, ...) {
 }
 
 #' Access tracking information for ICU stays including adminission and discharge times
+#'
+#' This function provides base access to the icustays table containing data which represents the tracking
+#' information for ICU stays including adminission and discharge times.
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
@@ -105,6 +118,9 @@ m4_icustays <- function(con, cohort = NULL, ...) {
 
 #' Access information documented regarding continuous infusions or intermittent administrations
 #'
+#' This function provides base access to the inputevents table containing data representing all information
+#' documented regarding continuous infusions or intermittent administrations.
+#'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
 #' @inheritParams m4_patients
@@ -131,6 +147,9 @@ m4_inputevents <- function(con, cohort = NULL, ...) {
 }
 
 #' Access information regarding patient outputs including urine, drainage, and so on
+#'
+#' This function provides base access to the outputevents table containing data representing all information
+#' regarding patient outputs, for example, urine, drainage, etc.
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
@@ -159,7 +178,7 @@ m4_outputevents <- function(con, cohort = NULL, ...) {
 
 #' Access procedures documented during the ICU stay
 #'
-#' This functions provides base access to the procedureevents table from the hospital icu.
+#' This functions provides base access to the procedureevents table from the hospital ICU.
 #' They include data on all procedures documented during the ICU stay (e.g. ventilation), though not
 #' necessarily conducted within the ICU (e.g. x-ray imaging).
 #'

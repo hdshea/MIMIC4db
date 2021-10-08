@@ -10,8 +10,8 @@ m4_meta_data()
 a tibble containing meta data concerning MIMIC IV tables.
 }
 \description{
-The function returns a tibble with the table name, MIMIC module and a description (all provided from the
-\href{https://mimic.mit.edu/docs/iv/}{MIMIC-IV website}).
+The function returns a tibble with the table name, MIMIC module and a description (all descriptive data are
+referenced from the \href{https://mimic.mit.edu/docs/iv/}{MIMIC-IV website}).
 }
 \examples{
 core <- m4_meta_data()

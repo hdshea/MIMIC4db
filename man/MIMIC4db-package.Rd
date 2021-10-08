@@ -8,8 +8,8 @@
 \description{
 MIMIC4db provides a tightly bound set of routines to reference the Google BigQuery version of
 the \href{https://physionet.org/content/mimiciii/1.0/}{MIMIC-IV v1.0} database using base access
-routines from the \href{https://github.com/r-dbi/DBI}{DBI} R package with an appropriate
-\href{https://github.com/r-dbi/bigrquery}{bigrquery} DBIConnection.
+routines from the \href{https://github.com/r-dbi/DBI}{DBI} R package and the
+\href{https://github.com/r-dbi/bigrquery}{bigrquery} R package.
 }
 \author{
 \strong{Maintainer}: H. David Shea \email{hdshea@comcast.net}

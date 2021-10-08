@@ -7,8 +7,8 @@
 m4_procedures_icd(con, cohort = NULL, ...)
 }
 \arguments{
-\item{con}{A DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}} object with an appropriate
-\href{https://github.com/r-dbi/bigrquery}{bigrquery} DBIConnection.}
+\item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
+with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{cohort}{an optional vector of patient IDs defining the cohort of interest}
 
@@ -18,6 +18,10 @@ m4_procedures_icd(con, cohort = NULL, ...)
 a tibble with the results.
 }
 \description{
+This function provides base access to the procedures_icd table containing data which represents a record of
+all procedures a patient was billed for during their hospital stay using the ICD-9 and ICD-10 ontologies.
+}
+\details{
 (PKEY \code{subject_id}, \code{hadm_id}. \code{pharmacy_id})
 }
 \examples{

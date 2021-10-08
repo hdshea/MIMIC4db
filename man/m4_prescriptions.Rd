@@ -7,8 +7,8 @@
 m4_prescriptions(con, cohort = NULL, ...)
 }
 \arguments{
-\item{con}{A DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}} object with an appropriate
-\href{https://github.com/r-dbi/bigrquery}{bigrquery} DBIConnection.}
+\item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
+with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{cohort}{an optional vector of patient IDs defining the cohort of interest}
 
@@ -18,6 +18,11 @@ m4_prescriptions(con, cohort = NULL, ...)
 a tibble with the results.
 }
 \description{
+This function provides base access to the prescriptions table containing data about prescribed medications.
+Information includes the name of the drug, coded identifiers including the Generic Sequence Number (GSN) and
+National Drug Code (NDC), the product strength, the formulary dose, and the route of administration.
+}
+\details{
 (PKEY \code{subject_id}, \code{hadm_id}. \code{pharmacy_id})
 }
 \examples{

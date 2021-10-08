@@ -1,10 +1,12 @@
-#' Access dimension table describing itemid. Defines concepts recorded in the events table in
-#' the ICU module
+#' Access dimension table describing itemid
+#'
+#' This function provides base access to the d_items table which defines concepts recorded in the events table in
+#' the icu module.
 #'
 #' (PKEY `itemid`)
 #'
-#' @param con A DBIConnection object, as returned by [DBI::dbConnect()] object with an appropriate
-#' [bigrquery](https://github.com/r-dbi/bigrquery) DBIConnection.
+#' @param con A [bigrquery::bigquery()] DBIConnection object, as returned by [DBI::dbConnect()]
+#' with an appropriate [bigrquery::bigquery()] DBI driver specified in the call.
 #' @param ... additional optional passed along parameters.
 #'
 #' @returns a tibble with the results.
@@ -25,12 +27,15 @@ m4_d_items <- function(con, ...) {
         dplyr::arrange(linksto,itemid)
 }
 
-#' Access chartevent items reference
+#' Access chartevents items reference
+#'
+#' This function provides base access to the d_items table which defines concepts recorded in the chartevents table in
+#' the icu module.
 #'
 #' (PKEY `ITEMID`)
 #'
-#' @param con A DBIConnection object, as returned by [DBI::dbConnect()] object with an appropriate
-#' [bigrquery](https://github.com/r-dbi/bigrquery) DBIConnection.
+#' @param con A [bigrquery::bigquery()] DBIConnection object, as returned by [DBI::dbConnect()]
+#' with an appropriate [bigrquery::bigquery()] DBI driver specified in the call.
 #'
 #' @returns a tibble with the results.
 #' @export
@@ -53,6 +58,9 @@ m4_chartevents_items <- function(con) {
 }
 
 #' Access datetimeevents items reference
+#'
+#' This function provides base access to the d_items table which defines concepts recorded in the datetimeevents
+#' table in the icu module.
 #'
 #' (PKEY `ITEMID`)
 #'
@@ -80,6 +88,9 @@ m4_datetimeevents_items <- function(con) {
 
 #' Access inputevents items reference
 #'
+#' This function provides base access to the d_items table which defines concepts recorded in the inputevents
+#' table in the icu module.
+#'
 #' (PKEY `ITEMID`)
 #'
 #' @inheritParams m4_chartevents_items
@@ -105,6 +116,9 @@ m4_inputevents_items <- function(con) {
 }
 
 #' Access outputevents items reference
+#'
+#' This function provides base access to the d_items table which defines concepts recorded in the outputevents
+#' table in the icu module.
 #'
 #' (PKEY `ITEMID`)
 #'
@@ -132,6 +146,9 @@ m4_outputevents_items <- function(con) {
 
 #' Access procedureevents items reference
 #'
+#' This function provides base access to the d_items table which defines concepts recorded in the procedureevents
+#' table in the icu module.
+#'
 #' (PKEY `ITEMID`)
 #'
 #' @inheritParams m4_chartevents_items
@@ -156,7 +173,10 @@ m4_procedureevents_items <- function(con) {
         dplyr::arrange(itemid)
 }
 
-#' Access imension table for hcpcsevents; provides a description of CPT codes
+#' Access dimension table for hcpcsevents; provides a description of CPT codes
+#'
+#' This function provides base access to the d_hcpcs table which defines concepts recorded in the hcpcsevents
+#' table in the hospital module.
 #'
 #' (PKEY `code`)
 #'
@@ -181,6 +201,9 @@ m4_d_hcpcs <- function(con, ...) {
 }
 
 #' Access dimension table for diagnoses_icd; provides a description of ICD-9/ICD-10 billed diagnoses
+#'
+#' This function provides base access to the d_icd_diagnoses table which defines concepts recorded in the diagnoses_icd
+#' table in the hospital module.
 #'
 #' (PKEY `icd_code`, `icd_version`)
 #'
@@ -208,6 +231,9 @@ m4_d_icd_diagnoses <- function(con, ...) {
 #'
 #' (PKEY `icd_code`, `icd_version`)
 #'
+#' This function provides base access to the d_icd_procedures table which defines concepts recorded in the
+#' procedures_icd table in the hospital module.
+#'
 #' @inheritParams m4_d_items
 #'
 #' @returns a tibble with the results.
@@ -229,6 +255,9 @@ m4_d_icd_procedures <- function(con, ...) {
 }
 
 #' Access dimension table for labevents; provides a description of all lab items
+#'
+#' This function provides base access to the d_labitems table which defines concepts recorded in the
+#' labevents table in the hospital module.
 #'
 #' (PKEY `itemid`)
 #'

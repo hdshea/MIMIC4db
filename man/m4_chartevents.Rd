@@ -7,8 +7,8 @@
 m4_chartevents(con, cohort = NULL, ...)
 }
 \arguments{
-\item{con}{A DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}} object with an appropriate
-\href{https://github.com/r-dbi/bigrquery}{bigrquery} DBIConnection.}
+\item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
+with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{cohort}{an optional vector of patient IDs defining the cohort of interest}
 
@@ -18,7 +18,11 @@ m4_chartevents(con, cohort = NULL, ...)
 a tibble with the results.
 }
 \description{
-This table contains the majority of information documented in the ICU
+This function provides base access to the chartevents table containing data representing all the charted data
+available for a patient. During their ICU stay, the primary repository of a patient’s information is their
+electronic chart. The electronic chart displays patients' routine vital signs and any additional information
+relevant to their care: ventilator settings, laboratory values, code status, mental status, and so on.
+As a result, the bulk of information about a patient’s stay is contained in chartevents.
 }
 \details{
 (PKEY \code{subject_id}, \code{hadm_id}, \code{stay_id})

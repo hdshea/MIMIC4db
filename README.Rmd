@@ -34,18 +34,82 @@ You can install MIMIC4db from GitHub with:
 # install.packages("devtools")
 devtools::install_github("hdshea/MIMIC4db")
 ```
-## Example
 
-This is a basic example which shows you how to solve a common problem:
+## Basic Usage
 
-```{r example}
+These are basic examples which show you how to solve a common problem.
+
+Connecting to the database:
+
+```{r pre_connect_internal, include=FALSE, eval=TRUE}
 library(MIMIC4db)
-# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
-# variable set to name of project which has billing set up and to which
-# you have write access.
 
-## basic example code
+con <- bigrquery::dbConnect(
+    bigrquery::bigquery(),
+    project = bigrquery::bq_test_project(),
+    quiet = TRUE
+)
 ```
+
+```{r pre_connect, include=TRUE, eval=FALSE}
+library(MIMIC4db)
+# To connect to the database, you must provide an appropriate project (in the `"your-project"` slot below)
+# which has billing set up and to which you have write access.  This project must be approved to access
+# the PhysioNet BigQuery MIMIC schemas.
+
+con <- bigrquery::dbConnect(
+    bigrquery::bigquery(),
+    project = "your-project",
+    quiet = TRUE
+)
+```
+
+Using the meta data function:
+
+```{r meta_functions, include=TRUE}
+core <- m4_meta_data()
+core <- core[core$module == "mimic_core", ]
+for(i in 1:length(core)) {
+  cat(stringr::str_c("select * from physionet-data.", core[i,"module"], ".", core[i,"table"], "\n"))
+}
+
+neuro <- m4_service_decsriptions()
+neuro <- neuro[startsWith(neuro$short_description, "Neurologic"), ]
+neuro[,c("service", "short_description")]
+```
+
+Using the two base functions:
+
+```{r base_functions, include=TRUE}
+d_items <- m4_select_data(con, "select * from physionet-data.mimic_icu.d_items order by itemid limit 5")
+d_items
+
+d_items <- m4_get_from_table(con, "physionet-data.mimic_icu.d_items", where = "where itemid <= 220048")
+d_items
+```
+
+Using the tables specific data access functions:
+
+```{r table_functions, include=TRUE, eval=TRUE}
+tab <- m4_chartevents_items(con)
+tab[c(1:5), ]
+
+pat <- m4_patients(con, cohort = 10137012)
+pat
+
+svs <- m4_services(con, cohort = 10137012)
+svs[c(1:5), ]
+
+evt <- m4_procedureevents(con, cohort = 12384098)
+evt[c(1:5), ]
+```
+
+Disconnecting from the database:
+
+```{r disconnect, include=TRUE, eval=TRUE}
+bigrquery::dbDisconnect(con)
+```
+
 
 ## Citations for MIMIC-IV publications:
 

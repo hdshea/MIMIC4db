@@ -1,7 +1,7 @@
 # These are the direct table access functions for the core module tables
 #
 # In the m4_ base table and common pattern functions, the concept of a cohort is a group of subjects identified
-# by numeric SUBJECT_IDs.
+# by numeric subject IDs
 #
 # A cohort can be:
 #
@@ -22,10 +22,13 @@ NULL
 
 #' Access unique patients in the database
 #'
+#' This function provides base access to the patients table containing data that is consistent for the
+#' time span of a patient in the database - i.e., there is one unique entry per patient in the database.
+#'
 #' (PKEY `subject_id`)
 #'
-#' @param con A DBIConnection object, as returned by [DBI::dbConnect()] object with an appropriate
-#' [bigrquery](https://github.com/r-dbi/bigrquery) DBIConnection.
+#' @param con A [bigrquery::bigquery()] DBIConnection object, as returned by [DBI::dbConnect()]
+#' with an appropriate [bigrquery::bigquery()] DBI driver specified in the call.
 #' @param cohort an optional vector of patient IDs defining the cohort of interest
 #' @param ... additional optional passed along parameters.
 #'
@@ -51,6 +54,11 @@ m4_patients <- function(con, cohort = NULL, ...) {
 }
 
 #' Access unique hospitalizations for patients in the database
+#'
+#' This function provides base access to the admissions table containing information regarding a patient’s
+#' admission to the hospital. Since each unique hospital visit for a patient is assigned a unique `hadm_id`,
+#' the admissions table can be considered as a definition table for `hadm_id`. Information available includes
+#' timing information for admission and discharge, demographic information, the source of the admission, and so on.
 #'
 #' (PKEY `hadm_id`)
 #'
@@ -79,7 +87,10 @@ m4_admissions <- function(con, cohort = NULL, ...) {
 
 #' Access patient movement from bed to bed within the hospital, including ICU admission and discharge
 #'
-#' (FKEY `subject_id`, `hadm_id`, `transfer_id`)
+#' This function provides base access to the transfer table containing information about the physical locations
+#' for patients throughout their hospital stay.
+#'
+#' (PKEY `subject_id`, `hadm_id`, `transfer_id`)
 #'
 #' @inheritParams m4_patients
 #'

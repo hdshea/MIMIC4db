@@ -3,8 +3,8 @@ ROW_ID <- NULL
 
 #' Encapsulated meta data for MIMIC IV tables
 #'
-#' The function returns a tibble with the table name, MIMIC module and a description (all provided from the
-#' [MIMIC-IV website](https://mimic.mit.edu/docs/iv/)).
+#' The function returns a tibble with the table name, MIMIC module and a description (all descriptive data are
+#' referenced from the [MIMIC-IV website](https://mimic.mit.edu/docs/iv/)).
 #'
 #' @return a tibble containing meta data concerning MIMIC IV tables.
 #' @export

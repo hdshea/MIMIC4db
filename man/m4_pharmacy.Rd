@@ -7,8 +7,8 @@
 m4_pharmacy(con, cohort = NULL, ...)
 }
 \arguments{
-\item{con}{A DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}} object with an appropriate
-\href{https://github.com/r-dbi/bigrquery}{bigrquery} DBIConnection.}
+\item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
+with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{cohort}{an optional vector of patient IDs defining the cohort of interest}
 
@@ -18,6 +18,12 @@ m4_pharmacy(con, cohort = NULL, ...)
 a tibble with the results.
 }
 \description{
+This function provides base access to the pharmacy table containing data of detailed information regarding
+filled medications which were prescribed to the patient. Pharmacy information includes the dose of the drug,
+the number of formulary doses, the frequency of dosing, the medication route, and the duration of the
+prescription.
+}
+\details{
 (PKEY \code{subject_id}, \code{hadm_id}. \code{pharmacy_id})
 }
 \examples{

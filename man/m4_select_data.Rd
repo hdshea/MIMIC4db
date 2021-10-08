@@ -8,8 +8,7 @@ m4_select_data(con, select_statement)
 }
 \arguments{
 \item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
-with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.
-.}
+with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{select_statement}{a character string representing a SQL \code{SELECT} statement.}
 }
@@ -29,6 +28,8 @@ con <- bigrquery::dbConnect(
     project = bigrquery::bq_test_project(),
     quiet = TRUE
 )
+
 m4_select_data(con, "select * from physionet-data.mimic_icu.d_items order by itemid limit 5")
+
 bigrquery::dbDisconnect(con)
 }

@@ -5,7 +5,6 @@
 #'
 #' @param con A [bigrquery::bigquery()] DBIConnection object, as returned by [DBI::dbConnect()]
 #' with an appropriate [bigrquery::bigquery()] DBI driver specified in the call.
-#' .
 #' @param select_statement a character string representing a SQL \code{SELECT} statement.
 #'
 #' @returns a tibble with the results.
@@ -20,7 +19,9 @@
 #'     project = bigrquery::bq_test_project(),
 #'     quiet = TRUE
 #' )
+#'
 #' m4_select_data(con, "select * from physionet-data.mimic_icu.d_items order by itemid limit 5")
+#'
 #' bigrquery::dbDisconnect(con)
 m4_select_data <- function(con, select_statement) {
     res <- bigrquery::dbSendQuery(con, select_statement)
@@ -34,7 +35,8 @@ m4_select_data <- function(con, select_statement) {
 #' Helper function to perform a basic \code{SELECT *} from the noted table projected down by the optional
 #' where clause.
 #'
-#' @param con  A DBIConnection object, as returned by dbConnect().
+#' @param con A [bigrquery::bigquery()] DBIConnection object, as returned by [DBI::dbConnect()]
+#' with an appropriate [bigrquery::bigquery()] DBI driver specified in the call.
 #' @param table a character string representing a valid MIMIC-IV table name.
 #' @param where a character string representing a SQL \code{WHERE} clause.
 #'
@@ -47,7 +49,9 @@ m4_select_data <- function(con, select_statement) {
 #'     project = bigrquery::bq_test_project(),
 #'     quiet = TRUE
 #' )
+#'
 #' m4_get_from_table(con, "physionet-data.mimic_icu.d_items", where = "where itemid <= 220048")
+#'
 #' bigrquery::dbDisconnect(con)
 m4_get_from_table <- function(con, table, where = NULL) {
     m4_select_data(con, stringr::str_c("SELECT * FROM", table, where, sep = " "))

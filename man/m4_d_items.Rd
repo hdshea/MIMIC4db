@@ -2,14 +2,13 @@
 % Please edit documentation in R/m4_dimensions.R
 \name{m4_d_items}
 \alias{m4_d_items}
-\title{Access dimension table describing itemid. Defines concepts recorded in the events table in
-the ICU module}
+\title{Access dimension table describing itemid}
 \usage{
 m4_d_items(con, ...)
 }
 \arguments{
-\item{con}{A DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}} object with an appropriate
-\href{https://github.com/r-dbi/bigrquery}{bigrquery} DBIConnection.}
+\item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
+with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{...}{additional optional passed along parameters.}
 }
@@ -17,6 +16,10 @@ m4_d_items(con, ...)
 a tibble with the results.
 }
 \description{
+This function provides base access to the d_items table which defines concepts recorded in the events table in
+the icu module.
+}
+\details{
 (PKEY \code{itemid})
 }
 \examples{

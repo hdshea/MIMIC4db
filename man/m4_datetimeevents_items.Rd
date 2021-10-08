@@ -7,13 +7,17 @@
 m4_datetimeevents_items(con)
 }
 \arguments{
-\item{con}{A DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}} object with an appropriate
-\href{https://github.com/r-dbi/bigrquery}{bigrquery} DBIConnection.}
+\item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
+with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 }
 \value{
 a tibble with the results.
 }
 \description{
+This function provides base access to the d_items table which defines concepts recorded in the datetimeevents
+table in the icu module.
+}
+\details{
 (PKEY \code{ITEMID})
 }
 \examples{

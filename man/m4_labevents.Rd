@@ -7,8 +7,8 @@
 m4_labevents(con, cohort = NULL, ...)
 }
 \arguments{
-\item{con}{A DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}} object with an appropriate
-\href{https://github.com/r-dbi/bigrquery}{bigrquery} DBIConnection.}
+\item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
+with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{cohort}{an optional vector of patient IDs defining the cohort of interest}
 
@@ -18,6 +18,11 @@ m4_labevents(con, cohort = NULL, ...)
 a tibble with the results.
 }
 \description{
+This function provides base access to the labevents table containing data pertaining to the results
+of all laboratory measurements made for a single patient. These include hematology measurements,
+blood gases, chemistry panels, and less common tests such as genetic assays.
+}
+\details{
 (PKEY \code{labevent_id})
 }
 \examples{
