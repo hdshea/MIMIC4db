@@ -4,4 +4,5 @@
 #' routines from the [DBI](https://github.com/r-dbi/DBI) R package with an appropriate
 #' [bigrquery](https://github.com/r-dbi/bigrquery) DBIConnection.
 #'
+#' @importFrom magrittr %>%
 "_PACKAGE"

@@ -12,6 +12,6 @@ routines from the \href{https://github.com/r-dbi/DBI}{DBI} R package with an app
 \href{https://github.com/r-dbi/bigrquery}{bigrquery} DBIConnection.
 }
 \author{
-\strong{Maintainer}: H. David Shea \email{hdshea@comcast.net} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: H. David Shea \email{hdshea@comcast.net}
 
 }

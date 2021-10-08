@@ -1,6 +1,3 @@
-#' @importFrom magrittr %>%
-NULL
-
 #' Basic SELECT statement wrapper returning results in a tibble
 #'
 #' Wrapper around DBI functions to send a \code{SELECT} statement, fetch the results

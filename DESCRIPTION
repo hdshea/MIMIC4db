@@ -5,8 +5,7 @@ Authors@R:
     person(given = "H. David",
            family = "Shea",
            role = c("aut", "cre"),
-           email = "hdshea@comcast.net",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "hdshea@comcast.net")
 Description: This package provides a tightly bound set of routines access the Google BigQuery version 
     of the MIMIC-IV database.  These access routines include metadata definitions, base data access functions,
     and higher level data access functions that encapsulate common patterns for data access for research
@@ -18,8 +17,8 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
-    bigrquery,
     DBI,
+    bigrquery,
     dplyr,
     gargle,
     magrittr,
@@ -28,3 +27,11 @@ Suggests:
     sodium,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Collate: 
+    'MIMIC4db-package.R'
+    'internals.R'
+    'm4_base.R'
+    'm4_core.R'
+    'm4_dimensions.R'
+    'm4_icu.R'
+    'm4_meta.R'

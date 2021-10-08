@@ -1,0 +1,24 @@
+(pw_name <- gargle:::secret_pw_name("MIMIC4db"))
+
+gargle:::secret_write(
+    package = "MIMIC4db",
+    name = "MIMIC4db-testing.json",
+    input = "/users/shea2/.R/MIMIC4db-testing.json"
+)
+
+    con <- bigrquery::dbConnect(
+        bigrquery::bigquery(),
+        project = bigrquery::bq_test_project(),
+        quiet = TRUE
+    )
+
+usethis::edit_r_environ()
+usethis::edit_r_profile()
+
+
+usethis::use_data(
+    hds_t_dat, hds_t_adm, hds_t_pat, hds_t_trn,
+    internal = TRUE, overwrite = TRUE
+)
+
+
