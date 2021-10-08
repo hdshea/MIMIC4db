@@ -20,7 +20,7 @@
 #' @include internals.R
 NULL
 
-#' Provides base access to unique patients in the database
+#' Access unique patients in the database
 #'
 #' (PKEY `subject_id`)
 #'
@@ -50,7 +50,7 @@ m4_patients <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id)
 }
 
-#' Provides base access to unique hospitalizations for patients in the database
+#' Access unique hospitalizations for patients in the database
 #'
 #' (PKEY `hadm_id`)
 #'
@@ -77,7 +77,7 @@ m4_admissions <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, admittime, hadm_id)
 }
 
-#' Provides base access to patient movement from bed to bed within the hospital, including ICU admission and discharge
+#' Access patient movement from bed to bed within the hospital, including ICU admission and discharge
 #'
 #' (FKEY `subject_id`, `hadm_id`, `transfer_id`)
 #'

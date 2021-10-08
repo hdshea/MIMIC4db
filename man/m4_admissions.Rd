@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_core.R
 \name{m4_admissions}
 \alias{m4_admissions}
-\title{Provides base access to unique hospitalizations for patients in the database}
+\title{Access unique hospitalizations for patients in the database}
 \usage{
 m4_admissions(con, cohort = NULL, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_core.R
 \name{m4_transfers}
 \alias{m4_transfers}
-\title{Provides base access to patient movement from bed to bed within the hospital, including ICU admission and discharge}
+\title{Access patient movement from bed to bed within the hospital, including ICU admission and discharge}
 \usage{
 m4_transfers(con, cohort = NULL, ...)
 }

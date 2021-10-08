@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_dimensions.R
 \name{m4_datetimeevents_items}
 \alias{m4_datetimeevents_items}
-\title{Provides base access to datetimeevents items reference}
+\title{Access datetimeevents items reference}
 \usage{
 m4_datetimeevents_items(con)
 }

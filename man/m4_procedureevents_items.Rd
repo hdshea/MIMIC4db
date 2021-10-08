@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_dimensions.R
 \name{m4_procedureevents_items}
 \alias{m4_procedureevents_items}
-\title{Provides base access to procedureevents items reference}
+\title{Access procedureevents items reference}
 \usage{
 m4_procedureevents_items(con)
 }

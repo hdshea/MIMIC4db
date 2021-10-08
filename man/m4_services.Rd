@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_hosp.R
 \name{m4_services}
 \alias{m4_services}
-\title{Provides base access to the hospital service(s) which cared for the patient during their hospitalization}
+\title{Access the hospital service(s) which cared for the patient during their hospitalization}
 \usage{
 m4_services(con, cohort = NULL, ...)
 }

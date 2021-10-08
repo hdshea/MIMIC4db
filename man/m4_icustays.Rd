@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_icu.R
 \name{m4_icustays}
 \alias{m4_icustays}
-\title{Provides base access to tracking information for ICU stays including adminission and discharge times}
+\title{Access tracking information for ICU stays including adminission and discharge times}
 \usage{
 m4_icustays(con, cohort = NULL, ...)
 }

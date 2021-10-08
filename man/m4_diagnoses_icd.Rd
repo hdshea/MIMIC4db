@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_hosp.R
 \name{m4_diagnoses_icd}
 \alias{m4_diagnoses_icd}
-\title{Provides base access to billed ICD-9/ICD-10 diagnoses for hospitalizations}
+\title{Access billed ICD-9/ICD-10 diagnoses for hospitalizations}
 \usage{
 m4_diagnoses_icd(con, cohort = NULL, ...)
 }

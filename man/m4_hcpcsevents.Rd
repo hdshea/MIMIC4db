@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_hosp.R
 \name{m4_hcpcsevents}
 \alias{m4_hcpcsevents}
-\title{Provides base access to billed events occurring during the hospitalization; includes CPT codes}
+\title{Access billed events occurring during the hospitalization; includes CPT codes}
 \usage{
 m4_hcpcsevents(con, cohort = NULL, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_hosp.R
 \name{m4_drgcodes}
 \alias{m4_drgcodes}
-\title{Provides base access to billed DRG codes for hospitalizations}
+\title{Access billed DRG codes for hospitalizations}
 \usage{
 m4_drgcodes(con, cohort = NULL, ...)
 }

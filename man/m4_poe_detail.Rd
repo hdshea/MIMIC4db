@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_hosp.R
 \name{m4_poe_detail}
 \alias{m4_poe_detail}
-\title{Provides base access to supplementary information for orders made by providers in the hospital}
+\title{Access supplementary information for orders made by providers in the hospital}
 \usage{
 m4_poe_detail(con, cohort = NULL, ...)
 }

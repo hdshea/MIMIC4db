@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_hosp.R
 \name{m4_emar_detail}
 \alias{m4_emar_detail}
-\title{Provides base access to supplementary information for electronic administrations recorded in emar}
+\title{Access supplementary information for electronic administrations recorded in emar}
 \usage{
 m4_emar_detail(con, cohort = NULL, ...)
 }

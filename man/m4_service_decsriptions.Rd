@@ -14,8 +14,7 @@ The function returns a tibble with descriptive data from services including serv
 short description.
 }
 \examples{
-neuro <- m4_service_decsriptions() \%>\%
-    dplyr::filter(startsWith(short_description, "Neurologic")) \%>\%
-    dplyr::select(service, short_description)
-neuro
+neuro <- m4_service_decsriptions()
+neuro <- neuro[startsWith(neuro$short_description, "Neurologic"), ]
+neuro[,c("service", "short_description")]
 }

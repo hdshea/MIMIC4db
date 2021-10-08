@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_hosp.R
 \name{m4_labevents}
 \alias{m4_labevents}
-\title{Provides base access to laboratory measurements sourced from patient derived specimens}
+\title{Access laboratory measurements sourced from patient derived specimens}
 \usage{
 m4_labevents(con, cohort = NULL, ...)
 }

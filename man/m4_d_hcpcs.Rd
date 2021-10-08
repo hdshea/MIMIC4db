@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_dimensions.R
 \name{m4_d_hcpcs}
 \alias{m4_d_hcpcs}
-\title{Provides base access to imension table for hcpcsevents; provides a description of CPT codes}
+\title{Access imension table for hcpcsevents; provides a description of CPT codes}
 \usage{
 m4_d_hcpcs(con, ...)
 }

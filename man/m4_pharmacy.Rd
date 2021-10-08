@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_hosp.R
 \name{m4_pharmacy}
 \alias{m4_pharmacy}
-\title{Provides base access to formulary, dosing, and other information for prescribed medications}
+\title{Access formulary, dosing, and other information for prescribed medications}
 \usage{
 m4_pharmacy(con, cohort = NULL, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_icu.R
 \name{m4_inputevents}
 \alias{m4_inputevents}
-\title{Provides base access to information documented regarding continuous infusions or intermittent administrations}
+\title{Access information documented regarding continuous infusions or intermittent administrations}
 \usage{
 m4_inputevents(con, cohort = NULL, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_hosp.R
 \name{m4_prescriptions}
 \alias{m4_prescriptions}
-\title{Provides base access to prescribed medications}
+\title{Access prescribed medications}
 \usage{
 m4_prescriptions(con, cohort = NULL, ...)
 }

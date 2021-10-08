@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_dimensions.R
 \name{m4_outputevents_items}
 \alias{m4_outputevents_items}
-\title{Provides base access to outputevents items reference}
+\title{Access outputevents items reference}
 \usage{
 m4_outputevents_items(con)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_icu.R
 \name{m4_chartevents}
 \alias{m4_chartevents}
-\title{Provides base access to charted items occurring during the ICU stay}
+\title{Access charted items occurring during the ICU stay}
 \usage{
 m4_chartevents(con, cohort = NULL, ...)
 }

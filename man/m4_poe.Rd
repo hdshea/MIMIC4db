@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_hosp.R
 \name{m4_poe}
 \alias{m4_poe}
-\title{Provides base access to orders made by providers relating to patient care}
+\title{Access orders made by providers relating to patient care}
 \usage{
 m4_poe(con, cohort = NULL, ...)
 }

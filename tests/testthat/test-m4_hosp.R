@@ -1,4 +1,4 @@
-test_that("m4_hops functions work", {
+test_that("m4_hosp functions work", {
     con <- bigrquery::dbConnect(
         bigrquery::bigquery(),
         project = bigrquery::bq_test_project(),
@@ -34,28 +34,28 @@ test_that("m4_hops functions work", {
     expect_equal(ncol(res), 24)
 
     res <- m4_pharmacy(con, cohort = 10137012)
-    expect_equal(nrow(res), )
-    expect_equal(ncol(res), )
+    expect_equal(nrow(res), 5)
+    expect_equal(ncol(res), 27)
 
     res <- m4_poe(con, cohort = 10137012)
-    expect_equal(nrow(res), )
-    expect_equal(ncol(res), )
+    expect_equal(nrow(res), 0)
+    expect_equal(ncol(res), 11)
 
     res <- m4_poe_detail(con, cohort = 10137012)
-    expect_equal(nrow(res), )
-    expect_equal(ncol(res), )
+    expect_equal(nrow(res), 0)
+    expect_equal(ncol(res), 5)
 
     res <- m4_prescriptions(con, cohort = 10137012)
-    expect_equal(nrow(res), )
-    expect_equal(ncol(res), )
+    expect_equal(nrow(res), 5)
+    expect_equal(ncol(res), 17)
 
     res <- m4_procedures_icd(con, cohort = 10137012)
-    expect_equal(nrow(res), )
-    expect_equal(ncol(res), )
+    expect_equal(nrow(res), 0)
+    expect_equal(ncol(res), 6)
 
     res <- m4_services(con, cohort = 10137012)
-    expect_equal(nrow(res), )
-    expect_equal(ncol(res), )
+    expect_equal(nrow(res), 1)
+    expect_equal(ncol(res), 5)
 
     bigrquery::dbDisconnect(con)
 })

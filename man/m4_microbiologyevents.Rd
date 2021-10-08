@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_hosp.R
 \name{m4_microbiologyevents}
 \alias{m4_microbiologyevents}
-\title{Provides base access to microbiology cultures}
+\title{Access microbiology cultures}
 \usage{
 m4_microbiologyevents(con, cohort = NULL, ...)
 }

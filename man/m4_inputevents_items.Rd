@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_dimensions.R
 \name{m4_inputevents_items}
 \alias{m4_inputevents_items}
-\title{Provides base access to inputevents items reference}
+\title{Access inputevents items reference}
 \usage{
 m4_inputevents_items(con)
 }

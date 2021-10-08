@@ -2,8 +2,7 @@
 % Please edit documentation in R/m4_hosp.R
 \name{m4_emar}
 \alias{m4_emar}
-\title{Provides base access to Electronic Medicine Administration Record (eMAR); barcode scanning of medications
-at the time of administration}
+\title{Access Electronic Medicine Administration Records (eMAR)}
 \usage{
 m4_emar(con, cohort = NULL, ...)
 }
@@ -19,6 +18,10 @@ m4_emar(con, cohort = NULL, ...)
 a tibble with the results.
 }
 \description{
+This functions provides base access to the emar table from the hospital module.  These data are
+collected by barcode scanning of medications at the time of administration.
+}
+\details{
 (PKEY \code{subject_id}, \code{hadm_id}, \code{emar_id}, \code{emar_seq})
 }
 \examples{

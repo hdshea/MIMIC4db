@@ -2,8 +2,7 @@
 % Please edit documentation in R/m4_icu.R
 \name{m4_procedureevents}
 \alias{m4_procedureevents}
-\title{Provides base access to procedures documented during the ICU stay (e.g. ventilation), though not
-necessarily conducted within the ICU (e.g. x-ray imaging)}
+\title{Access procedures documented during the ICU stay}
 \usage{
 m4_procedureevents(con, cohort = NULL, ...)
 }
@@ -19,6 +18,11 @@ m4_procedureevents(con, cohort = NULL, ...)
 a tibble with the results.
 }
 \description{
+This functions provides base access to the procedureevents table from the hospital icu.
+They include data on all procedures documented during the ICU stay (e.g. ventilation), though not
+necessarily conducted within the ICU (e.g. x-ray imaging).
+}
+\details{
 (PKEY \code{subject_id}, \code{hadm_id}, \code{stay_id})
 }
 \examples{

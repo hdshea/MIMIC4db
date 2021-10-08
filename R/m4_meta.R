@@ -1,3 +1,6 @@
+# hack for handling peculiarity of using dplyr and unquoted variable names inside a package
+ROW_ID <- NULL
+
 #' Encapsulated meta data for MIMIC IV tables
 #'
 #' The function returns a tibble with the table name, MIMIC module and a description (all provided from the
@@ -7,10 +10,11 @@
 #' @export
 #'
 #' @examples
-#' core <- m4_meta_data() %>%
-#'     dplyr::filter(module == "mimic_core") %>%
-#'     dplyr::transmute(statement = stringr::str_c("select * from physionet-data.", module, ".", table))
-#' core
+#' core <- m4_meta_data()
+#' core <- core[core$module == "mimic_core", ]
+#' for(i in 1:length(core)) {
+#'   cat(stringr::str_c("select * from physionet-data.", core[i,"module"], ".", core[i,"table"], "\n"))
+#' }
 m4_meta_data <- function() {
     tibble::tribble(
         ~table, ~module, ~description,
@@ -53,10 +57,9 @@ m4_meta_data <- function() {
 #' @export
 #'
 #' @examples
-#' neuro <- m4_service_decsriptions() %>%
-#'     dplyr::filter(startsWith(short_description, "Neurologic")) %>%
-#'     dplyr::select(service, short_description)
-#' neuro
+#' neuro <- m4_service_decsriptions()
+#' neuro <- neuro[startsWith(neuro$short_description, "Neurologic"), ]
+#' neuro[,c("service", "short_description")]
 m4_service_decsriptions <- function() {
     tibble::tribble(
         ~service, ~description,

@@ -20,7 +20,7 @@
 #' @include internals.R
 NULL
 
-#' Provides base access to charted items occurring during the ICU stay
+#' Access charted items occurring during the ICU stay
 #'
 #' This table contains the majority of information documented in the ICU
 #'
@@ -49,7 +49,7 @@ m4_chartevents <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
-#' Provides base access to documented information which is in a date format (e.g. date of last dialysis)
+#' Access documented information which is in a date format (e.g. date of last dialysis)
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
@@ -76,7 +76,7 @@ m4_datetimeevents <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
-#' Provides base access to tracking information for ICU stays including adminission and discharge times
+#' Access tracking information for ICU stays including adminission and discharge times
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
@@ -103,7 +103,7 @@ m4_icustays <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, intime, hadm_id)
 }
 
-#' Provides base access to information documented regarding continuous infusions or intermittent administrations
+#' Access information documented regarding continuous infusions or intermittent administrations
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
@@ -130,7 +130,7 @@ m4_inputevents <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, starttime, hadm_id)
 }
 
-#' Provides base access to information regarding patient outputs including urine, drainage, and so on
+#' Access information regarding patient outputs including urine, drainage, and so on
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
@@ -157,8 +157,11 @@ m4_outputevents <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
-#' Provides base access to procedures documented during the ICU stay (e.g. ventilation), though not
-#' necessarily conducted within the ICU (e.g. x-ray imaging)
+#' Access procedures documented during the ICU stay
+#'
+#' This functions provides base access to the procedureevents table from the hospital icu.
+#' They include data on all procedures documented during the ICU stay (e.g. ventilation), though not
+#' necessarily conducted within the ICU (e.g. x-ray imaging).
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
@@ -184,4 +187,3 @@ m4_procedureevents <- function(con, cohort = NULL, ...) {
     m4_get_from_table(con, mimic4_table_name("procedureevents"), where) %>%
         dplyr::arrange(subject_id, starttime, hadm_id)
 }
-

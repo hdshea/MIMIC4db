@@ -1,4 +1,4 @@
-#' Provides base access to billed ICD-9/ICD-10 diagnoses for hospitalizations
+#' Access billed ICD-9/ICD-10 diagnoses for hospitalizations
 #'
 #' (PKEY `subject_id`, `hadm_id`, `seq_num`)
 #'
@@ -25,7 +25,7 @@ m4_diagnoses_icd <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, hadm_id, seq_num)
 }
 
-#' Provides base access to billed DRG codes for hospitalizations
+#' Access billed DRG codes for hospitalizations
 #'
 #' (PKEY `subject_id`, `hadm_id`)
 #'
@@ -52,8 +52,10 @@ m4_drgcodes <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, hadm_id)
 }
 
-#' Provides base access to Electronic Medicine Administration Record (eMAR); barcode scanning of medications
-#' at the time of administration
+#' Access Electronic Medicine Administration Records (eMAR)
+#'
+#' This functions provides base access to the emar table from the hospital module.  These data are
+#' collected by barcode scanning of medications at the time of administration.
 #'
 #' (PKEY `subject_id`, `hadm_id`, `emar_id`, `emar_seq`)
 #'
@@ -80,7 +82,7 @@ m4_emar <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, hadm_id, emar_id, emar_seq)
 }
 
-#' Provides base access to supplementary information for electronic administrations recorded in emar
+#' Access supplementary information for electronic administrations recorded in emar
 #'
 #' (PKEY `subject_id`, `emar_id`, `emar_seq`, `parent_field_ordinal`)
 #'
@@ -107,7 +109,7 @@ m4_emar_detail <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, emar_id, emar_seq, parent_field_ordinal)
 }
 
-#' Provides base access to billed events occurring during the hospitalization; includes CPT codes
+#' Access billed events occurring during the hospitalization; includes CPT codes
 #'
 #' (PKEY `subject_id`, `hadm_id`)
 #'
@@ -134,7 +136,7 @@ m4_hcpcsevents <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, chartdate, hadm_id)
 }
 
-#' Provides base access to laboratory measurements sourced from patient derived specimens
+#' Access laboratory measurements sourced from patient derived specimens
 #'
 #' (PKEY `labevent_id`)
 #'
@@ -161,7 +163,7 @@ m4_labevents <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
-#' Provides base access to microbiology cultures
+#' Access microbiology cultures
 #'
 #' (PKEY `microevent_id`)
 #'
@@ -188,7 +190,7 @@ m4_microbiologyevents <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
-#' Provides base access to formulary, dosing, and other information for prescribed medications
+#' Access formulary, dosing, and other information for prescribed medications
 #'
 #' (PKEY `subject_id`, `hadm_id`. `pharmacy_id`)
 #'
@@ -215,7 +217,7 @@ m4_pharmacy <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, starttime, hadm_id)
 }
 
-#' Provides base access to orders made by providers relating to patient care
+#' Access orders made by providers relating to patient care
 #'
 #' (PKEY `subject_id`, `hadm_id`. `poe_seq`)
 #'
@@ -242,7 +244,7 @@ m4_poe <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, ordertime, hadm_id, poe_seq)
 }
 
-#' Provides base access to supplementary information for orders made by providers in the hospital
+#' Access supplementary information for orders made by providers in the hospital
 #'
 #' (PKEY `subject_id`, `hadm_id`. `poe_seq`)
 #'
@@ -269,7 +271,7 @@ m4_poe_detail <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, poe_seq)
 }
 
-#' Provides base access to prescribed medications
+#' Access prescribed medications
 #'
 #' (PKEY `subject_id`, `hadm_id`. `pharmacy_id`)
 #'
@@ -296,7 +298,7 @@ m4_prescriptions <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, starttime, hadm_id)
 }
 
-#' Provides base access to billed procedures for patients during their hospital stay
+#' Access billed procedures for patients during their hospital stay
 #'
 #' (PKEY `subject_id`, `hadm_id`. `pharmacy_id`)
 #'
@@ -323,7 +325,7 @@ m4_procedures_icd <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, chartdate, hadm_id)
 }
 
-#' Provides base access to the hospital service(s) which cared for the patient during their hospitalization
+#' Access the hospital service(s) which cared for the patient during their hospitalization
 #'
 #' (PKEY `subject_id`, `hadm_id`. `pharmacy_id`)
 #'

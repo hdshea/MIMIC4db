@@ -6,3 +6,9 @@
 #'
 #' @importFrom magrittr %>%
 "_PACKAGE"
+
+# hack for handling peculiarity of using dplyr and unquoted variable names inside a package
+admittime <- chartdate <- charttime <- code <- description <- emar_id <- emar_seq <- NULL
+hadm_id <- icd_code <- icd_version <- intime <- itemid <- linksto <- module <- ordertime <- NULL
+parent_field_ordinal <- poe_seq <- seq_num <- starttime <- statement <- subject_id <- NULL
+transfertime <- NULL

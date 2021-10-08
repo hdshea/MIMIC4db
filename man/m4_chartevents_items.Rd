@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_dimensions.R
 \name{m4_chartevents_items}
 \alias{m4_chartevents_items}
-\title{Provides base access to chartevent items reference}
+\title{Access chartevent items reference}
 \usage{
 m4_chartevents_items(con)
 }

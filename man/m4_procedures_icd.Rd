@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_hosp.R
 \name{m4_procedures_icd}
 \alias{m4_procedures_icd}
-\title{Provides base access to billed procedures for patients during their hospital stay}
+\title{Access billed procedures for patients during their hospital stay}
 \usage{
 m4_procedures_icd(con, cohort = NULL, ...)
 }

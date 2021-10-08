@@ -14,8 +14,9 @@ The function returns a tibble with the table name, MIMIC module and a descriptio
 \href{https://mimic.mit.edu/docs/iv/}{MIMIC-IV website}).
 }
 \examples{
-core <- m4_meta_data() \%>\%
-    dplyr::filter(module == "mimic_core") \%>\%
-    dplyr::transmute(statement = stringr::str_c("select * from physionet-data.", module, ".", table))
-core
+core <- m4_meta_data()
+core <- core[core$module == "mimic_core", ]
+for(i in 1:length(core)) {
+  cat(stringr::str_c("select * from physionet-data.", core[i,"module"], ".", core[i,"table"], "\n"))
+}
 }

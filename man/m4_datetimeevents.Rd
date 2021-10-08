@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_icu.R
 \name{m4_datetimeevents}
 \alias{m4_datetimeevents}
-\title{Provides base access to documented information which is in a date format (e.g. date of last dialysis)}
+\title{Access documented information which is in a date format (e.g. date of last dialysis)}
 \usage{
 m4_datetimeevents(con, cohort = NULL, ...)
 }
