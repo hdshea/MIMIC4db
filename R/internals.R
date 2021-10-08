@@ -12,9 +12,8 @@ mimic4_table_name <- function(tname) {
     rval
 }
 
-
 # In the m4_ base table and common pattern functions, the concept of a cohort is a group of subjects identified
-# by numeric SUBJECT_IDs.
+# by numeric subject IDs
 #
 # A cohort can be:
 #
@@ -35,7 +34,7 @@ cohort_where <- function(cohort) {
 }
 
 # In the m4_ base table and common pattern functions, the concept of an item list is a group of event items
-# identified by numeric ITEMIDs.
+# identified by numeric item IDs
 #
 # A item list can be:
 #

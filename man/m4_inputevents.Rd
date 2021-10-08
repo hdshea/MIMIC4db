@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_icu.R
 \name{m4_inputevents}
 \alias{m4_inputevents}
-\title{Provides base access to information documented regarding continuous infusions or intermittent administrations.}
+\title{Provides base access to information documented regarding continuous infusions or intermittent administrations}
 \usage{
 m4_inputevents(con, cohort = NULL, ...)
 }
@@ -27,8 +27,8 @@ con <- bigrquery::dbConnect(
     quiet = TRUE
 )
 
-evt <- m4_inputevents(con, cohort = 10137012)
-evt
+evt <- m4_inputevents(con, cohort = 12384098)
+dim(evt)
 
 bigrquery::dbDisconnect(con)
 }

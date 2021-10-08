@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_dimensions.R
 \name{m4_d_labitems}
 \alias{m4_d_labitems}
-\title{Provides base access to dimension table for labevents; provides a description of all lab items.}
+\title{Provides base access to dimension table for labevents; provides a description of all lab items}
 \usage{
 m4_d_labitems(con, ...)
 }

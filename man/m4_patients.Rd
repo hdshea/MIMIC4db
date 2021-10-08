@@ -28,7 +28,7 @@ con <- bigrquery::dbConnect(
 )
 
 pat <- m4_patients(con, cohort = 10137012)
-pat
+dim(pat)
 
 bigrquery::dbDisconnect(con)
 }

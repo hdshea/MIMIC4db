@@ -28,7 +28,7 @@ con <- bigrquery::dbConnect(
 )
 
 trn <- m4_transfers(con, cohort = 10137012)
-trn
+dim(trn)
 
 bigrquery::dbDisconnect(con)
 }

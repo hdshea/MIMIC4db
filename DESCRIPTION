@@ -18,7 +18,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
     DBI,
-    bigrquery,
+test    bigrquery,
     dplyr,
     gargle,
     magrittr,
@@ -33,5 +33,6 @@ Collate:
     'm4_base.R'
     'm4_core.R'
     'm4_dimensions.R'
+    'm4_hosp.R'
     'm4_icu.R'
     'm4_meta.R'

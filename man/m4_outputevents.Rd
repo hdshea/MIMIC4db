@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_icu.R
 \name{m4_outputevents}
 \alias{m4_outputevents}
-\title{Provides base access to information regarding patient outputs including urine, drainage, and so on.}
+\title{Provides base access to information regarding patient outputs including urine, drainage, and so on}
 \usage{
 m4_outputevents(con, cohort = NULL, ...)
 }
@@ -27,8 +27,8 @@ con <- bigrquery::dbConnect(
     quiet = TRUE
 )
 
-evt <- m4_outputevents(con, cohort = 10137012)
-evt
+evt <- m4_outputevents(con, cohort = 12384098)
+dim(evt)
 
 bigrquery::dbDisconnect(con)
 }

@@ -3,7 +3,7 @@
 \name{m4_d_items}
 \alias{m4_d_items}
 \title{Provides base access to dimension table describing itemid. Defines concepts recorded in the events table in
-the ICU module.}
+the ICU module}
 \usage{
 m4_d_items(con, ...)
 }

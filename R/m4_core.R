@@ -40,7 +40,7 @@ NULL
 #' )
 #'
 #' pat <- m4_patients(con, cohort = 10137012)
-#' pat
+#' dim(pat)
 #'
 #' bigrquery::dbDisconnect(con)
 m4_patients <- function(con, cohort = NULL, ...) {
@@ -67,7 +67,7 @@ m4_patients <- function(con, cohort = NULL, ...) {
 #' )
 #'
 #' adm <- m4_admissions(con, cohort = 10137012)
-#' adm
+#' dim(adm)
 #'
 #' bigrquery::dbDisconnect(con)
 m4_admissions <- function(con, cohort = NULL, ...) {
@@ -94,7 +94,7 @@ m4_admissions <- function(con, cohort = NULL, ...) {
 #' )
 #'
 #' trn <- m4_transfers(con, cohort = 10137012)
-#' trn
+#' dim(trn)
 #'
 #' bigrquery::dbDisconnect(con)
 m4_transfers <- function(con, cohort = NULL, ...) {
@@ -103,4 +103,4 @@ m4_transfers <- function(con, cohort = NULL, ...) {
     m4_get_from_table(con, mimic4_table_name("transfers"), where) %>%
             dplyr::arrange(subject_id, intime, hadm_id)
 }
-#+
+

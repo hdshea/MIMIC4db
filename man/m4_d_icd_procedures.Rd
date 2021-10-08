@@ -2,7 +2,7 @@
 % Please edit documentation in R/m4_dimensions.R
 \name{m4_d_icd_procedures}
 \alias{m4_d_icd_procedures}
-\title{Provides base access to dimension table for procedures_icd; provides a description of ICD-9/ICD-10 billed procedures.}
+\title{Provides base access to dimension table for procedures_icd; provides a description of ICD-9/ICD-10 billed procedures}
 \usage{
 m4_d_icd_procedures(con, ...)
 }

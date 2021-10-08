@@ -20,8 +20,9 @@
 #' @include internals.R
 NULL
 
-#' Provides base access to charted items occurring during the ICU stay.
-#' This table contains the majority of information documented in the ICU.
+#' Provides base access to charted items occurring during the ICU stay
+#'
+#' This table contains the majority of information documented in the ICU
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
@@ -37,8 +38,8 @@ NULL
 #'     quiet = TRUE
 #' )
 #'
-#' evt <- m4_chartevents(con, cohort = 10137012)
-#' evt
+#' evt <- m4_chartevents(con, cohort = 12384098)
+#' dim(evt)
 #'
 #' bigrquery::dbDisconnect(con)
 m4_chartevents <- function(con, cohort = NULL, ...) {
@@ -48,7 +49,7 @@ m4_chartevents <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
-#' Provides base access to documented information which is in a date format (e.g. date of last dialysis).
+#' Provides base access to documented information which is in a date format (e.g. date of last dialysis)
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
@@ -64,8 +65,8 @@ m4_chartevents <- function(con, cohort = NULL, ...) {
 #'     quiet = TRUE
 #' )
 #'
-#' evt <- m4_datetimeevents(con, cohort = 10137012)
-#' evt
+#' evt <- m4_datetimeevents(con, cohort = 12384098)
+#' dim(evt)
 #'
 #' bigrquery::dbDisconnect(con)
 m4_datetimeevents <- function(con, cohort = NULL, ...) {
@@ -75,7 +76,7 @@ m4_datetimeevents <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
-#' Provides base access to tracking information for ICU stays including adminission and discharge times.
+#' Provides base access to tracking information for ICU stays including adminission and discharge times
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
@@ -91,8 +92,8 @@ m4_datetimeevents <- function(con, cohort = NULL, ...) {
 #'     quiet = TRUE
 #' )
 #'
-#' stays <- m4_icustays(con, cohort = 10137012)
-#' stays
+#' stays <- m4_icustays(con, cohort = 12384098)
+#' dim(stays)
 #'
 #' bigrquery::dbDisconnect(con)
 m4_icustays <- function(con, cohort = NULL, ...) {
@@ -102,7 +103,7 @@ m4_icustays <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, intime, hadm_id)
 }
 
-#' Provides base access to information documented regarding continuous infusions or intermittent administrations.
+#' Provides base access to information documented regarding continuous infusions or intermittent administrations
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
@@ -118,8 +119,8 @@ m4_icustays <- function(con, cohort = NULL, ...) {
 #'     quiet = TRUE
 #' )
 #'
-#' evt <- m4_inputevents(con, cohort = 10137012)
-#' evt
+#' evt <- m4_inputevents(con, cohort = 12384098)
+#' dim(evt)
 #'
 #' bigrquery::dbDisconnect(con)
 m4_inputevents <- function(con, cohort = NULL, ...) {
@@ -129,7 +130,7 @@ m4_inputevents <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, starttime, hadm_id)
 }
 
-#' Provides base access to information regarding patient outputs including urine, drainage, and so on.
+#' Provides base access to information regarding patient outputs including urine, drainage, and so on
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
@@ -145,8 +146,8 @@ m4_inputevents <- function(con, cohort = NULL, ...) {
 #'     quiet = TRUE
 #' )
 #'
-#' evt <- m4_outputevents(con, cohort = 10137012)
-#' evt
+#' evt <- m4_outputevents(con, cohort = 12384098)
+#' dim(evt)
 #'
 #' bigrquery::dbDisconnect(con)
 m4_outputevents <- function(con, cohort = NULL, ...) {
@@ -156,7 +157,8 @@ m4_outputevents <- function(con, cohort = NULL, ...) {
         dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
-#' Provides base access to information regarding patient outputs including urine, drainage, and so on.
+#' Provides base access to procedures documented during the ICU stay (e.g. ventilation), though not
+#' necessarily conducted within the ICU (e.g. x-ray imaging)
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
@@ -172,8 +174,8 @@ m4_outputevents <- function(con, cohort = NULL, ...) {
 #'     quiet = TRUE
 #' )
 #'
-#' evt <- m4_procedureevents(con, cohort = 10137012)
-#' evt
+#' evt <- m4_procedureevents(con, cohort = 12384098)
+#' dim(evt)
 #'
 #' bigrquery::dbDisconnect(con)
 m4_procedureevents <- function(con, cohort = NULL, ...) {

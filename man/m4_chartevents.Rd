@@ -2,8 +2,7 @@
 % Please edit documentation in R/m4_icu.R
 \name{m4_chartevents}
 \alias{m4_chartevents}
-\title{Provides base access to charted items occurring during the ICU stay.
-This table contains the majority of information documented in the ICU.}
+\title{Provides base access to charted items occurring during the ICU stay}
 \usage{
 m4_chartevents(con, cohort = NULL, ...)
 }
@@ -19,6 +18,9 @@ m4_chartevents(con, cohort = NULL, ...)
 a tibble with the results.
 }
 \description{
+This table contains the majority of information documented in the ICU
+}
+\details{
 (PKEY \code{subject_id}, \code{hadm_id}, \code{stay_id})
 }
 \examples{
@@ -28,8 +30,8 @@ con <- bigrquery::dbConnect(
     quiet = TRUE
 )
 
-evt <- m4_chartevents(con, cohort = 10137012)
-evt
+evt <- m4_chartevents(con, cohort = 12384098)
+dim(evt)
 
 bigrquery::dbDisconnect(con)
 }

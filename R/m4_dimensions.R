@@ -1,5 +1,5 @@
 #' Provides base access to dimension table describing itemid. Defines concepts recorded in the events table in
-#' the ICU module.
+#' the ICU module
 #'
 #' (PKEY `itemid`)
 #'
@@ -156,7 +156,7 @@ m4_procedureevents_items <- function(con) {
         dplyr::arrange(itemid)
 }
 
-#' Provides base access to imension table for hcpcsevents; provides a description of CPT codes.
+#' Provides base access to imension table for hcpcsevents; provides a description of CPT codes
 #'
 #' (PKEY `code`)
 #'
@@ -180,7 +180,7 @@ m4_d_hcpcs <- function(con, ...) {
         dplyr::arrange(code)
 }
 
-#' Provides base access to dimension table for diagnoses_icd; provides a description of ICD-9/ICD-10 billed diagnoses.
+#' Provides base access to dimension table for diagnoses_icd; provides a description of ICD-9/ICD-10 billed diagnoses
 #'
 #' (PKEY `icd_code`, `icd_version`)
 #'
@@ -204,7 +204,7 @@ m4_d_icd_diagnoses <- function(con, ...) {
         dplyr::arrange(icd_code,icd_version)
 }
 
-#' Provides base access to dimension table for procedures_icd; provides a description of ICD-9/ICD-10 billed procedures.
+#' Provides base access to dimension table for procedures_icd; provides a description of ICD-9/ICD-10 billed procedures
 #'
 #' (PKEY `icd_code`, `icd_version`)
 #'
@@ -228,7 +228,7 @@ m4_d_icd_procedures <- function(con, ...) {
         dplyr::arrange(icd_code,icd_version)
 }
 
-#' Provides base access to dimension table for labevents; provides a description of all lab items.
+#' Provides base access to dimension table for labevents; provides a description of all lab items
 #'
 #' (PKEY `itemid`)
 #'

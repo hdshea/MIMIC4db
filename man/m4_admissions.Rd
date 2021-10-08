@@ -28,7 +28,7 @@ con <- bigrquery::dbConnect(
 )
 
 adm <- m4_admissions(con, cohort = 10137012)
-adm
+dim(adm)
 
 bigrquery::dbDisconnect(con)
 }
