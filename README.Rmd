@@ -64,13 +64,14 @@ con <- bigrquery::dbConnect(
 )
 ```
 
-Using the meta data function:
+Using the meta data functions:
 
 ```{r meta_functions, include=TRUE}
 core <- m4_meta_data()
 core <- core[core$module == "mimic_core", ]
 for(i in 1:length(core)) {
-  cat(stringr::str_c("select * from physionet-data.", core[i,"module"], ".", core[i,"table"], "\n"))
+  cat(stringr::str_c("select * from physionet-data.", 
+                     core[i,"module"], ".", core[i,"table"], "\n"))
 }
 
 neuro <- m4_service_decsriptions()
@@ -94,14 +95,34 @@ Using the tables specific data access functions:
 tab <- m4_chartevents_items(con)
 tab[c(1:5), ]
 
-pat <- m4_patients(con, cohort = 10137012)
+pat <- m4_patients(con, cohort = 16904137)
 pat
 
-svs <- m4_services(con, cohort = 10137012)
-svs[c(1:5), ]
+svs <- m4_services(con, cohort = 16904137)
+svs
 
-evt <- m4_procedureevents(con, cohort = 12384098)
+evt <- m4_procedureevents(con, cohort = 16904137)
 evt[c(1:5), ]
+```
+
+Using the common pattern data access functions:
+
+```{r pattern_functions, include=TRUE, eval=TRUE}
+# Combined and preprocessed patient and admission data
+patadm <- m4_patient_admissions(con, cohort = 16904137)
+patadm[, c(1:6)]
+patadm[, c(7:10)]
+patadm[, c(11:14)]
+patadm[, c(15:19)]
+
+# Combined and preprocessed patient, admission and icustay data
+icudet <- m4_patient_icustays(con, cohort = 16904137)
+icudet[, c(1:6)]
+icudet[, c(7:10)]
+icudet[, c(11:14)]
+icudet[, c(15:19)]
+icudet[, c(20:22)]
+icudet[, c(23:25)]
 ```
 
 Disconnecting from the database:

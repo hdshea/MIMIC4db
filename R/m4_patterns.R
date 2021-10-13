@@ -122,8 +122,8 @@ m4_patient_admissions <- function(con, cohort = NULL, ...) {
 #' bigrquery::dbDisconnect(con)
 m4_patient_icustays <- function(con, cohort = NULL, ...) {
   m4_icustays(con, cohort) %>%
-    dplyr::left_join(m4_patient_admissions(con, cohort), by = c("subject_id", "hadm_id")) %>%
-    dplyr::arrange(subject_id, intime) %>%
+    dplyr::full_join(m4_patient_admissions(con, cohort), by = c("subject_id", "hadm_id")) %>%
+    dplyr::arrange(subject_id, admittime, intime) %>%
     dplyr::group_by(subject_id, hadm_id) %>%
     dplyr::mutate(
       icustay_seq = dplyr::row_number(),
