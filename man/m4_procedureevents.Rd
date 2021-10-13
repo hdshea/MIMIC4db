@@ -4,13 +4,15 @@
 \alias{m4_procedureevents}
 \title{Access procedures documented during the ICU stay}
 \usage{
-m4_procedureevents(con, cohort = NULL, ...)
+m4_procedureevents(con, cohort = NULL, itemlist = NULL, ...)
 }
 \arguments{
 \item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
 with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{cohort}{an optional vector of patient IDs defining the cohort of interest}
+
+\item{itemlist}{an optional vector of item IDs defining the event types of interest}
 
 \item{...}{additional optional passed along parameters.}
 }
@@ -27,9 +29,9 @@ necessarily conducted within the ICU (e.g. x-ray imaging).
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 evt <- m4_procedureevents(con, cohort = 12384098)

@@ -26,9 +26,9 @@ a patient was admitted.
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 svs <- m4_services(con, cohort = 10137012)

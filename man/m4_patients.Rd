@@ -26,9 +26,9 @@ time span of a patient in the database - i.e., there is one unique entry per pat
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 pat <- m4_patients(con, cohort = 10137012)

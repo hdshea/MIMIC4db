@@ -13,9 +13,9 @@
 #' @export
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' tab <- m4_d_items(con)
@@ -23,8 +23,8 @@
 #'
 #' bigrquery::dbDisconnect(con)
 m4_d_items <- function(con, ...) {
-    m4_get_from_table(con, mimic4_table_name("d_items"), ...) %>%
-        dplyr::arrange(linksto,itemid)
+  m4_get_from_table(con, mimic4_table_name("d_items"), ...) %>%
+    dplyr::arrange(linksto, itemid)
 }
 
 #' Access chartevents items reference
@@ -36,25 +36,32 @@ m4_d_items <- function(con, ...) {
 #'
 #' @param con A [bigrquery::bigquery()] DBIConnection object, as returned by [DBI::dbConnect()]
 #' with an appropriate [bigrquery::bigquery()] DBI driver specified in the call.
+#' @param category an character string defining the item category of interest
 #'
 #' @returns a tibble with the results.
 #' @export
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' tab <- m4_chartevents_items(con)
 #' tab
 #'
 #' bigrquery::dbDisconnect(con)
-m4_chartevents_items <- function(con) {
-    m4_d_items(con, where = "where linksto = 'chartevents'") %>%
-        dplyr::select(-linksto) %>%
-        dplyr::arrange(itemid)
+m4_chartevents_items <- function(con, category = character()) {
+  where <- "where linksto = 'chartevents'"
+  if (length(category) != 0) {
+    category <- get_category("chartevents", category)
+    where <- stringr::str_c(where, " and category = '", category, "'", sep = "")
+  }
+
+  m4_d_items(con, where = where) %>%
+    dplyr::select(-linksto) %>%
+    dplyr::arrange(category, itemid)
 }
 
 #' Access datetimeevents items reference
@@ -71,19 +78,25 @@ m4_chartevents_items <- function(con) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' tab <- m4_datetimeevents_items(con)
 #' tab
 #'
 #' bigrquery::dbDisconnect(con)
-m4_datetimeevents_items <- function(con) {
-    m4_d_items(con, where = "where linksto = 'datetimeevents'") %>%
-        dplyr::select(-linksto) %>%
-        dplyr::arrange(itemid)
+m4_datetimeevents_items <- function(con, category = character()) {
+  where <- "where linksto = 'datetimeevents'"
+  if (length(category) != 0) {
+    category <- get_category("datetimeevents", category)
+    where <- stringr::str_c(where, " and category = '", category, "'", sep = "")
+  }
+
+  m4_d_items(con, where = where) %>%
+    dplyr::select(-linksto) %>%
+    dplyr::arrange(category, itemid)
 }
 
 #' Access inputevents items reference
@@ -100,19 +113,25 @@ m4_datetimeevents_items <- function(con) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' tab <- m4_inputevents_items(con)
 #' tab
 #'
 #' bigrquery::dbDisconnect(con)
-m4_inputevents_items <- function(con) {
-    m4_d_items(con, where = "where linksto = 'inputevents'") %>%
-        dplyr::select(-linksto) %>%
-        dplyr::arrange(itemid)
+m4_inputevents_items <- function(con, category = character()) {
+  where <- "where linksto = 'inputevents'"
+  if (length(category) != 0) {
+    category <- get_category("inputevents", category)
+    where <- stringr::str_c(where, " and category = '", category, "'", sep = "")
+  }
+
+  m4_d_items(con, where = where) %>%
+    dplyr::select(-linksto) %>%
+    dplyr::arrange(category, itemid)
 }
 
 #' Access outputevents items reference
@@ -129,19 +148,25 @@ m4_inputevents_items <- function(con) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' tab <- m4_outputevents_items(con)
 #' tab
 #'
 #' bigrquery::dbDisconnect(con)
-m4_outputevents_items <- function(con) {
-    m4_d_items(con, where = "where linksto = 'outputevents'") %>%
-        dplyr::select(-linksto) %>%
-        dplyr::arrange(itemid)
+m4_outputevents_items <- function(con, category = character()) {
+  where <- "where linksto = 'outputevents'"
+  if (length(category) != 0) {
+    category <- get_category("outputevents", category)
+    where <- stringr::str_c(where, " and category = '", category, "'", sep = "")
+  }
+
+  m4_d_items(con, where = where) %>%
+    dplyr::select(-linksto) %>%
+    dplyr::arrange(category, itemid)
 }
 
 #' Access procedureevents items reference
@@ -158,19 +183,25 @@ m4_outputevents_items <- function(con) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' tab <- m4_procedureevents_items(con)
 #' tab
 #'
 #' bigrquery::dbDisconnect(con)
-m4_procedureevents_items <- function(con) {
-    m4_d_items(con, where = "where linksto = 'procedureevents'") %>%
-        dplyr::select(-linksto) %>%
-        dplyr::arrange(itemid)
+m4_procedureevents_items <- function(con, category = character()) {
+  where <- "where linksto = 'procedureevents'"
+  if (length(category) != 0) {
+    category <- get_category("procedureevents", category)
+    where <- stringr::str_c(where, " and category = '", category, "'", sep = "")
+  }
+
+  m4_d_items(con, where = where) %>%
+    dplyr::select(-linksto) %>%
+    dplyr::arrange(category, itemid)
 }
 
 #' Access dimension table for hcpcsevents; provides a description of CPT codes
@@ -186,9 +217,9 @@ m4_procedureevents_items <- function(con) {
 #' @export
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' tab <- m4_d_hcpcs(con)
@@ -196,8 +227,8 @@ m4_procedureevents_items <- function(con) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_d_hcpcs <- function(con, ...) {
-    m4_get_from_table(con, mimic4_table_name("d_hcpcs"), ...) %>%
-        dplyr::arrange(code)
+  m4_get_from_table(con, mimic4_table_name("d_hcpcs"), ...) %>%
+    dplyr::arrange(code)
 }
 
 #' Access dimension table for diagnoses_icd; provides a description of ICD-9/ICD-10 billed diagnoses
@@ -213,9 +244,9 @@ m4_d_hcpcs <- function(con, ...) {
 #' @export
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' tab <- m4_d_icd_diagnoses(con)
@@ -223,8 +254,8 @@ m4_d_hcpcs <- function(con, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_d_icd_diagnoses <- function(con, ...) {
-    m4_get_from_table(con, mimic4_table_name("d_icd_diagnoses"), ...) %>%
-        dplyr::arrange(icd_code,icd_version)
+  m4_get_from_table(con, mimic4_table_name("d_icd_diagnoses"), ...) %>%
+    dplyr::arrange(icd_code, icd_version)
 }
 
 #' Access dimension table for procedures_icd; provides a description of ICD-9/ICD-10 billed procedures
@@ -240,9 +271,9 @@ m4_d_icd_diagnoses <- function(con, ...) {
 #' @export
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' tab <- m4_d_icd_procedures(con)
@@ -250,8 +281,8 @@ m4_d_icd_diagnoses <- function(con, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_d_icd_procedures <- function(con, ...) {
-    m4_get_from_table(con, mimic4_table_name("d_icd_procedures"), ...) %>%
-        dplyr::arrange(icd_code,icd_version)
+  m4_get_from_table(con, mimic4_table_name("d_icd_procedures"), ...) %>%
+    dplyr::arrange(icd_code, icd_version)
 }
 
 #' Access dimension table for labevents; provides a description of all lab items
@@ -267,9 +298,9 @@ m4_d_icd_procedures <- function(con, ...) {
 #' @export
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' tab <- m4_d_labitems(con)
@@ -277,6 +308,6 @@ m4_d_icd_procedures <- function(con, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_d_labitems <- function(con, ...) {
-    m4_get_from_table(con, mimic4_table_name("d_labitems"), ...) %>%
-        dplyr::arrange(itemid)
+  m4_get_from_table(con, mimic4_table_name("d_labitems"), ...) %>%
+    dplyr::arrange(itemid)
 }

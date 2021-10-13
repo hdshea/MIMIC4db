@@ -27,9 +27,9 @@ and procedures must be ordered via POE.
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 poe <- m4_poe(con, cohort = 10137012)

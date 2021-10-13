@@ -24,9 +24,9 @@ the icu module.
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 tab <- m4_d_items(con)

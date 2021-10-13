@@ -4,13 +4,15 @@
 \alias{m4_inputevents}
 \title{Access information documented regarding continuous infusions or intermittent administrations}
 \usage{
-m4_inputevents(con, cohort = NULL, ...)
+m4_inputevents(con, cohort = NULL, itemlist = NULL, ...)
 }
 \arguments{
 \item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
 with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{cohort}{an optional vector of patient IDs defining the cohort of interest}
+
+\item{itemlist}{an optional vector of item IDs defining the event types of interest}
 
 \item{...}{additional optional passed along parameters.}
 }
@@ -26,9 +28,9 @@ documented regarding continuous infusions or intermittent administrations.
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 evt <- m4_inputevents(con, cohort = 12384098)

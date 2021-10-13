@@ -4,11 +4,13 @@
 \alias{m4_datetimeevents_items}
 \title{Access datetimeevents items reference}
 \usage{
-m4_datetimeevents_items(con)
+m4_datetimeevents_items(con, category = character())
 }
 \arguments{
 \item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
 with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
+
+\item{category}{an character string defining the item category of interest}
 }
 \value{
 a tibble with the results.
@@ -22,9 +24,9 @@ table in the icu module.
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 tab <- m4_datetimeevents_items(con)

@@ -16,7 +16,11 @@ referenced from the \href{https://mimic.mit.edu/docs/iv/}{MIMIC-IV website}).
 \examples{
 core <- m4_meta_data()
 core <- core[core$module == "mimic_core", ]
-for(i in 1:length(core)) {
-  cat(stringr::str_c("select * from physionet-data.", core[i,"module"], ".", core[i,"table"], "\n"))
+for (i in 1:length(core)) {
+  cat(stringr::str_c("select * from physionet-data.",
+                     core[i, 'module'],
+                     ".",
+                     core[i, 'table'],
+                     "\n"))
 }
 }

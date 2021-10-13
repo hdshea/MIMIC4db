@@ -26,9 +26,9 @@ information for ICU stays including adminission and discharge times.
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 stays <- m4_icustays(con, cohort = 12384098)

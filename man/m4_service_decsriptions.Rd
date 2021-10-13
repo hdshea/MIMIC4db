@@ -16,5 +16,5 @@ short description.
 \examples{
 neuro <- m4_service_decsriptions()
 neuro <- neuro[startsWith(neuro$short_description, "Neurologic"), ]
-neuro[,c("service", "short_description")]
+neuro[, c("service", "short_description")]
 }

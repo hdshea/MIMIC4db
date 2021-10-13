@@ -21,6 +21,8 @@ Imports:
     bigrquery,
     dplyr,
     gargle,
+    Hmisc,
+    lubridate,
     magrittr,
     stringr,
     tibble
@@ -37,3 +39,4 @@ Collate:
     'm4_hosp.R'
     'm4_icu.R'
     'm4_meta.R'
+    'm4_patterns.R'

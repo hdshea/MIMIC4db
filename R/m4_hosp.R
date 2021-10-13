@@ -35,20 +35,23 @@ NULL
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
-#' diag <- m4_diagnoses_icd(con, cohort = 10137012)
+#' diag <- m4_diagnoses(con, cohort = 10137012)
 #' dim(diag)
 #'
 #' bigrquery::dbDisconnect(con)
-m4_diagnoses_icd <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+m4_diagnoses <- function(con, cohort = NULL, ...) {
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("diagnoses_icd"), where) %>%
-        dplyr::arrange(subject_id, hadm_id, seq_num)
+  m4_get_from_table(con, mimic4_table_name("diagnoses_icd"), where) %>%
+    dplyr::left_join(m4_d_icd_diagnoses(con), by = c("icd_code", "icd_version")) %>%
+    dplyr::mutate(diagnosis = long_title) %>%
+    dplyr::select(-icd_code, -icd_version, -long_title) %>%
+    dplyr::arrange(subject_id, hadm_id, seq_num)
 }
 
 #' Access billed DRG codes for hospitalizations
@@ -66,9 +69,9 @@ m4_diagnoses_icd <- function(con, cohort = NULL, ...) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' drgc <- m4_drgcodes(con, cohort = 10137012)
@@ -76,10 +79,10 @@ m4_diagnoses_icd <- function(con, cohort = NULL, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_drgcodes <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("drgcodes"), where) %>%
-        dplyr::arrange(subject_id, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("drgcodes"), where) %>%
+    dplyr::arrange(subject_id, hadm_id)
 }
 
 #' Access Electronic Medicine Administration Records (eMAR)
@@ -96,9 +99,9 @@ m4_drgcodes <- function(con, cohort = NULL, ...) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' emar <- m4_emar(con, cohort = 10137012)
@@ -106,10 +109,10 @@ m4_drgcodes <- function(con, cohort = NULL, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_emar <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("emar"), where) %>%
-        dplyr::arrange(subject_id, hadm_id, emar_id, emar_seq)
+  m4_get_from_table(con, mimic4_table_name("emar"), where) %>%
+    dplyr::arrange(subject_id, hadm_id, emar_id, emar_seq)
 }
 
 #' Access supplementary information for electronic administrations recorded in emar
@@ -127,9 +130,9 @@ m4_emar <- function(con, cohort = NULL, ...) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' edet <- m4_emar_detail(con, cohort = 10137012)
@@ -137,10 +140,10 @@ m4_emar <- function(con, cohort = NULL, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_emar_detail <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("emar_detail"), where) %>%
-        dplyr::arrange(subject_id, emar_id, emar_seq, parent_field_ordinal)
+  m4_get_from_table(con, mimic4_table_name("emar_detail"), where) %>%
+    dplyr::arrange(subject_id, emar_id, emar_seq, parent_field_ordinal)
 }
 
 #' Access billed events occurring during the hospitalization; includes CPT codes
@@ -157,9 +160,9 @@ m4_emar_detail <- function(con, cohort = NULL, ...) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' evt <- m4_hcpcsevents(con, cohort = 10137012)
@@ -167,10 +170,14 @@ m4_emar_detail <- function(con, cohort = NULL, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_hcpcsevents <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("hcpcsevents"), where) %>%
-        dplyr::arrange(subject_id, chartdate, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("hcpcsevents"), where) %>%
+    dplyr::select(-short_description) %>%
+    dplyr::left_join(m4_d_hcpcs(con), by = c("hcpcs_cd" = "code")) %>%
+    dplyr::mutate(code = hcpcs_cd) %>%
+    dplyr::select(subject_id, hadm_id, chartdate, seq_num, code, category, long_description, short_description) %>%
+    dplyr::arrange(subject_id, chartdate, hadm_id)
 }
 
 #' Access laboratory measurements sourced from patient derived specimens
@@ -188,9 +195,9 @@ m4_hcpcsevents <- function(con, cohort = NULL, ...) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' evt <- m4_labevents(con, cohort = 10137012)
@@ -198,10 +205,17 @@ m4_hcpcsevents <- function(con, cohort = NULL, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_labevents <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("labevents"), where) %>%
-        dplyr::arrange(subject_id, charttime, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("labevents"), where) %>%
+    dplyr::left_join(m4_d_labitems(con), by = "itemid") %>%
+    dplyr::mutate(lab_item = label) %>%
+    dplyr::select(
+      labevent_id, subject_id, hadm_id, specimen_id, charttime, storetime,
+      lab_item, fluid, category, value, valuenum, valueuom,
+      ref_range_lower, ref_range_upper, flag, priority, comments, loinc_code
+    ) %>%
+    dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
 #' Access microbiology cultures
@@ -219,9 +233,9 @@ m4_labevents <- function(con, cohort = NULL, ...) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' evt <- m4_microbiologyevents(con, cohort = 10137012)
@@ -229,10 +243,10 @@ m4_labevents <- function(con, cohort = NULL, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_microbiologyevents <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("microbiologyevents"), where) %>%
-        dplyr::arrange(subject_id, charttime, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("microbiologyevents"), where) %>%
+    dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
 #' Access formulary, dosing, and other information for prescribed medications
@@ -251,9 +265,9 @@ m4_microbiologyevents <- function(con, cohort = NULL, ...) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' evt <- m4_pharmacy(con, cohort = 10137012)
@@ -261,10 +275,10 @@ m4_microbiologyevents <- function(con, cohort = NULL, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_pharmacy <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("pharmacy"), where) %>%
-        dplyr::arrange(subject_id, starttime, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("pharmacy"), where) %>%
+    dplyr::arrange(subject_id, starttime, hadm_id)
 }
 
 #' Access orders made by providers relating to patient care
@@ -282,9 +296,9 @@ m4_pharmacy <- function(con, cohort = NULL, ...) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' poe <- m4_poe(con, cohort = 10137012)
@@ -292,10 +306,10 @@ m4_pharmacy <- function(con, cohort = NULL, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_poe <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("poe"), where) %>%
-        dplyr::arrange(subject_id, ordertime, hadm_id, poe_seq)
+  m4_get_from_table(con, mimic4_table_name("poe"), where) %>%
+    dplyr::arrange(subject_id, ordertime, hadm_id, poe_seq)
 }
 
 #' Access supplementary information for orders made by providers in the hospital
@@ -314,9 +328,9 @@ m4_poe <- function(con, cohort = NULL, ...) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' pod <- m4_poe_detail(con, cohort = 10137012)
@@ -324,10 +338,10 @@ m4_poe <- function(con, cohort = NULL, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_poe_detail <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("poe_detail"), where) %>%
-        dplyr::arrange(subject_id, poe_seq)
+  m4_get_from_table(con, mimic4_table_name("poe_detail"), where) %>%
+    dplyr::arrange(subject_id, poe_seq)
 }
 
 #' Access prescribed medications
@@ -345,9 +359,9 @@ m4_poe_detail <- function(con, cohort = NULL, ...) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' script <- m4_prescriptions(con, cohort = 10137012)
@@ -355,10 +369,10 @@ m4_poe_detail <- function(con, cohort = NULL, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_prescriptions <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("prescriptions"), where) %>%
-        dplyr::arrange(subject_id, starttime, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("prescriptions"), where) %>%
+    dplyr::arrange(subject_id, starttime, hadm_id)
 }
 
 #' Access billed procedures for patients during their hospital stay
@@ -375,20 +389,23 @@ m4_prescriptions <- function(con, cohort = NULL, ...) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
-#' icd <- m4_procedures_icd(con, cohort = 10137012)
+#' icd <- m4_procedures(con, cohort = 10137012)
 #' dim(icd)
 #'
 #' bigrquery::dbDisconnect(con)
-m4_procedures_icd <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+m4_procedures <- function(con, cohort = NULL, ...) {
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("procedures_icd"), where) %>%
-        dplyr::arrange(subject_id, chartdate, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("procedures_icd"), where) %>%
+    dplyr::left_join(m4_d_icd_procedures(con), by = c("icd_code", "icd_version")) %>%
+    dplyr::mutate(procedure = long_title) %>%
+    dplyr::select(-icd_code, -icd_version, -long_title) %>%
+    dplyr::arrange(subject_id, hadm_id, seq_num, chartdate)
 }
 
 #' Access the hospital service(s) which cared for the patient during their hospitalization
@@ -405,9 +422,9 @@ m4_procedures_icd <- function(con, cohort = NULL, ...) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' svs <- m4_services(con, cohort = 10137012)
@@ -415,8 +432,25 @@ m4_procedures_icd <- function(con, cohort = NULL, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_services <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
+  svclkp <- m4_service_decsriptions()
 
-    m4_get_from_table(con, mimic4_table_name("services"), where) %>%
-        dplyr::arrange(subject_id, transfertime, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("services"), where) %>%
+    dplyr::arrange(subject_id, transfertime, hadm_id) %>%
+    dplyr::group_by(subject_id, hadm_id) %>%
+    dplyr::mutate(
+      service_seq = dplyr::row_number(),
+      first_service = (service_seq == 1)
+    ) %>%
+    dplyr::ungroup() %>%
+    dplyr::left_join(svclkp, by = c("curr_service" = "service")) %>%
+    dplyr::mutate(curr_description = description, curr_short_desc = short_description) %>%
+    dplyr::select(-description, -short_description) %>%
+    dplyr::left_join(svclkp, by = c("prev_service" = "service")) %>%
+    dplyr::mutate(prev_description = description, prev_short_desc = short_description) %>%
+    dplyr::select(
+      subject_id, hadm_id, transfertime, service_seq, first_service,
+      curr_service, curr_short_desc, curr_description,
+      prev_service, prev_short_desc, prev_description
+    )
 }

@@ -4,13 +4,15 @@
 \alias{m4_chartevents}
 \title{Access charted items occurring during the ICU stay}
 \usage{
-m4_chartevents(con, cohort = NULL, ...)
+m4_chartevents(con, cohort = NULL, itemlist = NULL, ...)
 }
 \arguments{
 \item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
 with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
 \item{cohort}{an optional vector of patient IDs defining the cohort of interest}
+
+\item{itemlist}{an optional vector of item IDs defining the event types of interest}
 
 \item{...}{additional optional passed along parameters.}
 }
@@ -29,9 +31,9 @@ As a result, the bulk of information about a patient’s stay is contained in ch
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 evt <- m4_chartevents(con, cohort = 12384098)

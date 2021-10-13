@@ -27,9 +27,9 @@ to the primary reason for a patient’s stay at the hospital.
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 drgc <- m4_drgcodes(con, cohort = 10137012)

@@ -28,9 +28,9 @@ timing information for admission and discharge, demographic information, the sou
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 adm <- m4_admissions(con, cohort = 10137012)

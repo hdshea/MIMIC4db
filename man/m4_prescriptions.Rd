@@ -27,9 +27,9 @@ National Drug Code (NDC), the product strength, the formulary dose, and the rout
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 script <- m4_prescriptions(con, cohort = 10137012)

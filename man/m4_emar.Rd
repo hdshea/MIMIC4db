@@ -26,9 +26,9 @@ collected by barcode scanning of medications at the time of administration.
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 emar <- m4_emar(con, cohort = 10137012)

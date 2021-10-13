@@ -27,9 +27,9 @@ blood gases, chemistry panels, and less common tests such as genetic assays.
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 evt <- m4_labevents(con, cohort = 10137012)

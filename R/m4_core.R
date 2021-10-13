@@ -37,9 +37,9 @@ NULL
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' pat <- m4_patients(con, cohort = 10137012)
@@ -47,10 +47,10 @@ NULL
 #'
 #' bigrquery::dbDisconnect(con)
 m4_patients <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("patients"), where) %>%
-        dplyr::arrange(subject_id)
+  m4_get_from_table(con, mimic4_table_name("patients"), where) %>%
+    dplyr::arrange(subject_id)
 }
 
 #' Access unique hospitalizations for patients in the database
@@ -69,9 +69,9 @@ m4_patients <- function(con, cohort = NULL, ...) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' adm <- m4_admissions(con, cohort = 10137012)
@@ -79,10 +79,10 @@ m4_patients <- function(con, cohort = NULL, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_admissions <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("admissions"), where) %>%
-        dplyr::arrange(subject_id, admittime, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("admissions"), where) %>%
+    dplyr::arrange(subject_id, admittime, hadm_id)
 }
 
 #' Access patient movement from bed to bed within the hospital, including ICU admission and discharge
@@ -99,9 +99,9 @@ m4_admissions <- function(con, cohort = NULL, ...) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' trn <- m4_transfers(con, cohort = 10137012)
@@ -109,9 +109,8 @@ m4_admissions <- function(con, cohort = NULL, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_transfers <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("transfers"), where) %>%
-            dplyr::arrange(subject_id, intime, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("transfers"), where) %>%
+    dplyr::arrange(subject_id, intime, hadm_id)
 }
-

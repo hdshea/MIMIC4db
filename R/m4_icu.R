@@ -30,27 +30,31 @@ NULL
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
-#' @inheritParams m4_patients
+#' @param con A [bigrquery::bigquery()] DBIConnection object, as returned by [DBI::dbConnect()]
+#' with an appropriate [bigrquery::bigquery()] DBI driver specified in the call.
+#' @param cohort an optional vector of patient IDs defining the cohort of interest
+#' @param itemlist an optional vector of item IDs defining the event types of interest
+#' @param ... additional optional passed along parameters.
 #'
 #' @returns a tibble with the results.
 #' @export
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' evt <- m4_chartevents(con, cohort = 12384098)
 #' dim(evt)
 #'
 #' bigrquery::dbDisconnect(con)
-m4_chartevents <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+m4_chartevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
+  where <- combined_where(cohort, itemlist)
 
-    m4_get_from_table(con, mimic4_table_name("chartevents"), where) %>%
-        dplyr::arrange(subject_id, charttime, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("chartevents"), where) %>%
+    dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
 #' Access documented information which is in a date format (e.g. date of last dialysis)
@@ -63,27 +67,27 @@ m4_chartevents <- function(con, cohort = NULL, ...) {
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
-#' @inheritParams m4_patients
+#' @inheritParams m4_chartevents
 #'
 #' @returns a tibble with the results.
 #' @export
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' evt <- m4_datetimeevents(con, cohort = 12384098)
 #' dim(evt)
 #'
 #' bigrquery::dbDisconnect(con)
-m4_datetimeevents <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+m4_datetimeevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
+  where <- combined_where(cohort, itemlist)
 
-    m4_get_from_table(con, mimic4_table_name("datetimeevents"), where) %>%
-        dplyr::arrange(subject_id, charttime, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("datetimeevents"), where) %>%
+    dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
 #' Access tracking information for ICU stays including adminission and discharge times
@@ -93,16 +97,16 @@ m4_datetimeevents <- function(con, cohort = NULL, ...) {
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
-#' @inheritParams m4_patients
+#' @inheritParams m4_chartevents
 #'
 #' @returns a tibble with the results.
 #' @export
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' stays <- m4_icustays(con, cohort = 12384098)
@@ -110,10 +114,10 @@ m4_datetimeevents <- function(con, cohort = NULL, ...) {
 #'
 #' bigrquery::dbDisconnect(con)
 m4_icustays <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+  where <- cohort_where(cohort)
 
-    m4_get_from_table(con, mimic4_table_name("icustays"), where) %>%
-        dplyr::arrange(subject_id, intime, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("icustays"), where) %>%
+    dplyr::arrange(subject_id, intime, hadm_id)
 }
 
 #' Access information documented regarding continuous infusions or intermittent administrations
@@ -123,27 +127,27 @@ m4_icustays <- function(con, cohort = NULL, ...) {
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
-#' @inheritParams m4_patients
+#' @inheritParams m4_chartevents
 #'
 #' @returns a tibble with the results.
 #' @export
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' evt <- m4_inputevents(con, cohort = 12384098)
 #' dim(evt)
 #'
 #' bigrquery::dbDisconnect(con)
-m4_inputevents <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+m4_inputevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
+  where <- combined_where(cohort, itemlist)
 
-    m4_get_from_table(con, mimic4_table_name("inputevents"), where) %>%
-        dplyr::arrange(subject_id, starttime, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("inputevents"), where) %>%
+    dplyr::arrange(subject_id, starttime, hadm_id)
 }
 
 #' Access information regarding patient outputs including urine, drainage, and so on
@@ -153,27 +157,27 @@ m4_inputevents <- function(con, cohort = NULL, ...) {
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
-#' @inheritParams m4_patients
+#' @inheritParams m4_chartevents
 #'
 #' @returns a tibble with the results.
 #' @export
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' evt <- m4_outputevents(con, cohort = 12384098)
 #' dim(evt)
 #'
 #' bigrquery::dbDisconnect(con)
-m4_outputevents <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+m4_outputevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
+  where <- combined_where(cohort, itemlist)
 
-    m4_get_from_table(con, mimic4_table_name("outputevents"), where) %>%
-        dplyr::arrange(subject_id, charttime, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("outputevents"), where) %>%
+    dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
 #' Access procedures documented during the ICU stay
@@ -184,25 +188,25 @@ m4_outputevents <- function(con, cohort = NULL, ...) {
 #'
 #' (PKEY `subject_id`, `hadm_id`, `stay_id`)
 #'
-#' @inheritParams m4_patients
+#' @inheritParams m4_chartevents
 #'
 #' @returns a tibble with the results.
 #' @export
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' evt <- m4_procedureevents(con, cohort = 12384098)
 #' dim(evt)
 #'
 #' bigrquery::dbDisconnect(con)
-m4_procedureevents <- function(con, cohort = NULL, ...) {
-    where <- cohort_where(cohort)
+m4_procedureevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
+  where <- combined_where(cohort, itemlist)
 
-    m4_get_from_table(con, mimic4_table_name("procedureevents"), where) %>%
-        dplyr::arrange(subject_id, starttime, hadm_id)
+  m4_get_from_table(con, mimic4_table_name("procedureevents"), where) %>%
+    dplyr::arrange(subject_id, starttime, hadm_id)
 }

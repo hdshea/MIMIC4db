@@ -27,9 +27,9 @@ and many other parameters associated with the medical administration.
 }
 \examples{
 con <- bigrquery::dbConnect(
-    bigrquery::bigquery(),
-    project = bigrquery::bq_test_project(),
-    quiet = TRUE
+  bigrquery::bigquery(),
+  project = bigrquery::bq_test_project(),
+  quiet = TRUE
 )
 
 edet <- m4_emar_detail(con, cohort = 10137012)

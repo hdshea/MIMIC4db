@@ -15,19 +15,19 @@
 #' # variable set to name of project which has billing set up and to which
 #' # you have write access.
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' m4_select_data(con, "select * from physionet-data.mimic_icu.d_items order by itemid limit 5")
 #'
 #' bigrquery::dbDisconnect(con)
 m4_select_data <- function(con, select_statement) {
-    res <- bigrquery::dbSendQuery(con, select_statement)
-    rval <- bigrquery::dbFetch(res)
-    bigrquery::dbClearResult(res)
-    rval
+  res <- bigrquery::dbSendQuery(con, select_statement, quiet = TRUE)
+  rval <- bigrquery::dbFetch(res, quiet = TRUE)
+  bigrquery::dbClearResult(res, quiet = TRUE)
+  rval
 }
 
 #' Simple generic SELECT * wrapper for extracting data from base tables
@@ -45,14 +45,14 @@ m4_select_data <- function(con, select_statement) {
 #'
 #' @examples
 #' con <- bigrquery::dbConnect(
-#'     bigrquery::bigquery(),
-#'     project = bigrquery::bq_test_project(),
-#'     quiet = TRUE
+#'   bigrquery::bigquery(),
+#'   project = bigrquery::bq_test_project(),
+#'   quiet = TRUE
 #' )
 #'
 #' m4_get_from_table(con, "physionet-data.mimic_icu.d_items", where = "where itemid <= 220048")
 #'
 #' bigrquery::dbDisconnect(con)
 m4_get_from_table <- function(con, table, where = NULL) {
-    m4_select_data(con, stringr::str_c("SELECT * FROM", table, where, sep = " "))
+  m4_select_data(con, stringr::str_c("SELECT * FROM", table, where, sep = " "))
 }
