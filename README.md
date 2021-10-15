@@ -74,8 +74,10 @@ neuro[,c("service", "short_description")]
 Using the two base functions:
 
 ``` r
-d_items <- m4_select_data(con, 
-                          "select * from physionet-data.mimic_icu.d_items order by itemid limit 5")
+d_items <- m4_select_data(
+  con, 
+  "select * from physionet-data.mimic_icu.d_items order by itemid limit 5"
+)
 d_items
 #> # A tibble: 5 × 9
 #>   itemid label  abbreviation linksto category unitname param_type lownormalvalue
