@@ -86,7 +86,7 @@ d_items
 #> 5 220048 Heart… Heart Rhythm charte… Routine… <NA>     Text                   NA
 #> # … with 1 more variable: highnormalvalue <dbl>
 
-d_items <- m4_get_from_table(con, "physionet-data.mimic_icu.d_items", where = "where itemid <= 220048")
+d_items <- m4_get_from_table(con, "d_items", where = "where itemid <= 220048")
 d_items
 #> # A tibble: 5 × 9
 #>   itemid label  abbreviation linksto category unitname param_type lownormalvalue
@@ -164,14 +164,14 @@ patadm[, c(1:6)]
 patadm[, c(7:10)]
 #> # A tibble: 2 × 4
 #>   admittime           dischtime           los_hospital admission_age
-#>   <dttm>              <dttm>                     <dbl>         <int>
-#> 1 2105-10-04 17:26:00 2105-10-12 11:11:00         7.74            54
-#> 2 2117-01-24 06:33:00 2117-01-29 15:59:00         5.39            54
+#>   <dttm>              <dttm>                     <dbl>         <dbl>
+#> 1 2105-10-04 17:26:00 2105-10-12 11:11:00         7.74          42.8
+#> 2 2117-01-24 06:33:00 2117-01-29 15:59:00         5.39          54.1
 patadm[, c(11:14)]
 #> # A tibble: 2 × 4
 #>   admission_decade anchor_year_group admission_type admission_location    
 #>   <fct>            <chr>             <fct>          <fct>                 
-#> 1 [50,60)          2017 - 2019       URGENT         TRANSFER FROM HOSPITAL
+#> 1 [40,50)          2017 - 2019       URGENT         TRANSFER FROM HOSPITAL
 #> 2 [50,60)          2017 - 2019       EW EMER.       TRANSFER FROM HOSPITAL
 patadm[, c(15:19)]
 #> # A tibble: 2 × 5
@@ -197,9 +197,9 @@ icudet[, c(7:10)]
 icudet[, c(11:14)]
 #> # A tibble: 2 × 4
 #>   admission_age admission_decade anchor_year_group admission_type
-#>           <int> <fct>            <chr>             <fct>         
-#> 1            54 [50,60)          2017 - 2019       URGENT        
-#> 2            54 [50,60)          2017 - 2019       EW EMER.
+#>           <dbl> <fct>            <chr>             <fct>         
+#> 1          42.8 [40,50)          2017 - 2019       URGENT        
+#> 2          54.1 [50,60)          2017 - 2019       EW EMER.
 icudet[, c(15:19)]
 #> # A tibble: 2 × 5
 #>   admission_location     discharge_location insurance ethnicity_group language

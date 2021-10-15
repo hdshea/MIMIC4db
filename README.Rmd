@@ -85,7 +85,7 @@ Using the two base functions:
 d_items <- m4_select_data(con, "select * from physionet-data.mimic_icu.d_items order by itemid limit 5")
 d_items
 
-d_items <- m4_get_from_table(con, "physionet-data.mimic_icu.d_items", where = "where itemid <= 220048")
+d_items <- m4_get_from_table(con, "d_items", where = "where itemid <= 220048")
 d_items
 ```
 
