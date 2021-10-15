@@ -53,9 +53,9 @@ con <- bigrquery::dbConnect(
 
 ```{r pre_connect, include=TRUE, eval=FALSE}
 library(MIMIC4db)
-# To connect to the database, you must provide an appropriate project (in the `"your-project"` slot below)
-# which has billing set up and to which you have write access.  This project must be approved to access
-# the PhysioNet BigQuery MIMIC schemas.
+# To connect to the database, you must provide an appropriate project (in the `your-project` 
+# slot below) which has billing set up and to which you have write access.  This project 
+# must be approved to access the PhysioNet BigQuery MIMIC schemas.
 
 con <- bigrquery::dbConnect(
     bigrquery::bigquery(),
@@ -82,7 +82,8 @@ neuro[,c("service", "short_description")]
 Using the two base functions:
 
 ```{r base_functions, include=TRUE}
-d_items <- m4_select_data(con, "select * from physionet-data.mimic_icu.d_items order by itemid limit 5")
+d_items <- m4_select_data(con, 
+                          "select * from physionet-data.mimic_icu.d_items order by itemid limit 5")
 d_items
 
 d_items <- m4_get_from_table(con, "d_items", where = "where itemid <= 220048")
