@@ -78,13 +78,26 @@ m4_patient_admissions <- function(con, cohort = NULL, ...) {
           stringr::str_starts(ethnicity, "PATIENT") ~ "UNKNOWN",
           TRUE ~ "OTHER"
         ),
-      ethnicity_group = as.factor(ethnicity_group),
-      admission_type = as.factor(admission_type),
-      admission_location = as.factor(admission_location),
-      discharge_location = as.factor(discharge_location),
-      insurance = as.factor(insurance),
-      language = as.factor(language),
-      marital_status = as.factor(marital_status)
+      ethnicity_group = factor(ethnicity_group,
+                               levels = c("ASIAN", "BLACK", "HISPANIC", "NATIVE", "WHITE", "OTHER", "UNKNOWN")),
+      admission_type = factor(admission_type,
+                              levels = c("AMBULATORY OBSERVATION", "DIRECT EMER.",
+                              "DIRECT OBSERVATION", "ELECTIVE", "EU OBSERVATION", "EW EMER.",
+                              "OBSERVATION ADMIT", "SURGICAL SAME DAY ADMISSION", "URGENT")),
+      admission_location = factor(ifelse(is.na(admission_location), "UNKNOWN", admission_location),
+                                  levels = c("AMBULATORY SURGERY TRANSFER", "CLINIC REFERRAL", "EMERGENCY ROOM",
+                                             "INFORMATION NOT AVAILABLE", "INTERNAL TRANSFER TO OR FROM PSYCH",
+                                             "PACU", "PHYSICIAN REFERRAL", "PROCEDURE SITE", "TRANSFER FROM HOSPITAL",
+                                             "TRANSFER FROM SKILLED NURSING FACILITY", "WALK-IN/SELF REFERRAL", "UNKNOWN")),
+      discharge_location = factor(ifelse(is.na(discharge_location), "UNKNOWN", discharge_location),
+                                  levels = c("ACUTE HOSPITAL", "AGAINST ADVICE", "ASSISTED LIVING",
+                                             "CHRONIC/LONG TERM ACUTE CARE", "DIED", "HEALTHCARE FACILITY", "HOME",
+                                             "HOME HEALTH CARE", "HOSPICE", "OTHER FACILITY", "PSYCH FACILITY", "REHAB",
+                                             "SKILLED NURSING FACILITY", "UNKNOWN")),
+      insurance = factor(insurance, levels = c("Medicaid", "Medicare", "Other")),
+      language = factor(ifelse(language == "?", "NON-ENGLISH", language), levels = c("ENGLISH", "NON-ENGLISH")),
+      marital_status = factor(ifelse(is.na(marital_status), "UNKNOWN", marital_status),
+                              levels = c("DIVORCED", "MARRIED", "SINGLE", "WIDOWED", "UNKNOWN"))
     ) %>%
     dplyr::arrange(subject_id, admittime) %>%
     dplyr::group_by(subject_id) %>%

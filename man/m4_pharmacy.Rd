@@ -48,7 +48,7 @@ con <- bigrquery::dbConnect(
   quiet = TRUE
 )
 
-evt <- m4_pharmacy(con, cohort = 10137012)
+evt <- m4_pharmacy(con, cohort = 10177976)
 dim(evt)
 
 bigrquery::dbDisconnect(con)

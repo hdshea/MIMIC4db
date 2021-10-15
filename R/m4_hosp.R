@@ -366,7 +366,7 @@ m4_microbiologyevents <- function(con, cohort = NULL, ...) {
 #'   quiet = TRUE
 #' )
 #'
-#' evt <- m4_pharmacy(con, cohort = 10137012)
+#' evt <- m4_pharmacy(con, cohort = 10177976)
 #' dim(evt)
 #'
 #' bigrquery::dbDisconnect(con)
@@ -491,7 +491,7 @@ m4_poe_detail <- function(con, cohort = NULL, ...) {
 #'   quiet = TRUE
 #' )
 #'
-#' script <- m4_prescriptions(con, cohort = 10137012)
+#' script <- m4_prescriptions(con, cohort = 10177976)
 #' dim(script)
 #'
 #' bigrquery::dbDisconnect(con)

@@ -45,7 +45,7 @@ con <- bigrquery::dbConnect(
   quiet = TRUE
 )
 
-script <- m4_prescriptions(con, cohort = 10137012)
+script <- m4_prescriptions(con, cohort = 10177976)
 dim(script)
 
 bigrquery::dbDisconnect(con)

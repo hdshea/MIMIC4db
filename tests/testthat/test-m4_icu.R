@@ -13,12 +13,12 @@ test_that("m4_icu functions work", {
   expect_equal(nrow(res), 72)
   expect_equal(ncol(res), 10)
 
-  res <- m4_datetimeevents(con, cohort = 12384098)
-  expect_equal(nrow(res), 940)
+  res <- m4_datetimeevents(con, cohort = 15914798)
+  expect_equal(nrow(res), 3)
   expect_equal(ncol(res), 9)
 
-  res <- m4_datetimeevents(con, cohort = 10004235, itemlist = 224261)
-  expect_equal(nrow(res), 19)
+  res <- m4_datetimeevents(con, cohort = 15914798, itemlist = 225755)
+  expect_equal(nrow(res), 3)
   expect_equal(ncol(res), 9)
 
   res <- m4_icustays(con, cohort = 12384098)

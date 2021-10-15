@@ -33,8 +33,8 @@ test_that("m4_hosp functions work", {
   expect_equal(nrow(res), 42)
   expect_equal(ncol(res), 24)
 
-  res <- m4_pharmacy(con, cohort = 10047172)
-  expect_equal(nrow(res), 266)
+  res <- m4_pharmacy(con, cohort = 10177976)
+  expect_equal(nrow(res), 3)
   expect_equal(ncol(res), 27)
 
   res <- m4_poe(con, cohort = 10047172)

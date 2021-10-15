@@ -49,7 +49,7 @@ con <- bigrquery::dbConnect(
   quiet = TRUE
 )
 
-evt <- m4_datetimeevents(con, cohort = 12384098)
+evt <- m4_datetimeevents(con, cohort = 15914798)
 dim(evt)
 
 bigrquery::dbDisconnect(con)
