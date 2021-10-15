@@ -15,7 +15,7 @@ transfertime <- admission_age <- admission_decade <- admission_location <- admis
 admission_type <- anchor_age <- discharge_location <- dischtime <- dod <- NULL
 ethnicity_group <- first_admission <- first_icustay <- gender <- icustay_seq <- NULL
 insurance <- los <- los_hospital <- los_icustay <- outtime <- stay_id <- NULL
-anchor_year_group <- langauge <- marital_status <- NULL
+anchor_year_group <- langauge <- marital_status <- anchor_year <- NULL
 category <- comments <- curr_description <- curr_service <- curr_short_desc <- NULL
 first_service <- flag <- fluid <- hcpcs_cd <- lab_item <- label <- labevent_id <- language <- NULL
 loinc_code <- long_description <- long_title <- prev_description <- prev_service <- NULL

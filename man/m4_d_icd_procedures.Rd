@@ -16,13 +16,18 @@ with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI 
 a tibble with the results.
 }
 \description{
-(PKEY \code{icd_code}, \code{icd_version})
-}
-\details{
 This function provides base access to the d_icd_procedures table which defines concepts recorded in the
 procedures_icd table in the hospital module.
 }
+\details{
+Table attributes for d_icd_procedures table:
+
+(\strong{PKEY} \code{icd_code}, \code{icd_version}) reference data for procedures_icd table
+}
 \examples{
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
 con <- bigrquery::dbConnect(
   bigrquery::bigquery(),
   project = bigrquery::bq_test_project(),

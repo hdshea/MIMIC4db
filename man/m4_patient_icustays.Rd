@@ -18,11 +18,8 @@ with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI 
 a tibble with the results.
 }
 \description{
-This includes all of the information from the \code{mimic_get_patient_admissions} function plus addition
-data on icu stays while in the hospital.
-}
-\details{
-This is patterned off the \code{icustay_detail} SQL in the mimic-code github repository referenced above.
+This includes all of the information from the \code{mimic_get_patient_admissions} function plus additional
+data pertaining to individual ICU stays while in the hospital.
 }
 \examples{
 con <- bigrquery::dbConnect(

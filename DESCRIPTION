@@ -24,6 +24,7 @@ Imports:
     Hmisc,
     lubridate,
     magrittr,
+    rlang,
     stringr,
     tibble
 Suggests: 

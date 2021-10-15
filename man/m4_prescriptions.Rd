@@ -23,9 +23,22 @@ Information includes the name of the drug, coded identifiers including the Gener
 National Drug Code (NDC), the product strength, the formulary dose, and the route of administration.
 }
 \details{
-(PKEY \code{subject_id}, \code{hadm_id}. \code{pharmacy_id})
+Table attributes for prescriptions table:
+
+(\strong{PKEY} \code{pharmacy_id})
+
+(\strong{FKEY} \code{subject_id}) -> patients table
+
+(\strong{FKEY} \code{hadm_id}) -> admissions table
+
+(\strong{FKEY} \code{pharmacy_id}) -> pharmacy table
+
+(\strong{FKEY} \code{pharmacy_id}) -> emar table
 }
 \examples{
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
 con <- bigrquery::dbConnect(
   bigrquery::bigquery(),
   project = bigrquery::bq_test_project(),

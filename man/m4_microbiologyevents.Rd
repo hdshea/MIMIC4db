@@ -23,9 +23,18 @@ which are a common procedure to check for infectious growth and to assess which 
 most effective.
 }
 \details{
-(PKEY \code{microevent_id})
+Table attributes for microbiologyevents table:
+
+(\strong{PKEY} \code{microevent_id})
+
+(\strong{FKEY} \code{subject_id}) -> patients table
+
+(\strong{FKEY} \code{hadm_id}) -> admissions table
 }
 \examples{
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
 con <- bigrquery::dbConnect(
   bigrquery::bigquery(),
   project = bigrquery::bq_test_project(),

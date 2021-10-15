@@ -18,15 +18,12 @@ with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI 
 a tibble with the results.
 }
 \description{
-The function calculates as part of the data frame
-length of stay in the hospital in days (\code{los_hospital}) and age at admission in years (\code{admission_age}).
-Patients who are older than 89 years old at any time in the database have had their date of birth
-shifted to obscure their age and comply with HIPAA.  These ages appear in the data as >= 300.
-As such, an additional field is added to categorize age into decades (\code{admission_decade}).
-Patients older than 89 show up in the 90 and older age decade bucket.
-}
-\details{
-This is patterned off the \code{icustay_detail} SQL in the mimic-code github repository referenced above.
+This function combines data from the patients with matching data from the admissions table.  The function
+calculates additional common pattern data like length of stay in the hospital in days (\code{los_hospital}) and
+age at admission in years (\code{admission_age}).  Patients who are older than 89 years old at any time in the
+database have had their date of birth shifted to obscure their age and comply with HIPAA.  These ages
+appear in the data as = 91.  As such, an additional field is added to categorize age into decades
+(\code{admission_decade}).  Patients older than 89 show up in the 90 and older age decade bucket.
 }
 \examples{
 con <- bigrquery::dbConnect(

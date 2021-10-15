@@ -24,9 +24,18 @@ field_name, and the value is field_value. EAV tables allow for flexible descript
 attributes are heterogenous.
 }
 \details{
-(PKEY \code{subject_id}, \code{hadm_id}. \code{poe_seq})
+Table attributes for poe_detail table:
+
+(\strong{PKEY} \code{poe_id}, \code{poe_seq})
+
+(\strong{FKEY} \code{subject_id}) -> patients table
+
+(\strong{FKEY} \code{poe_id}) -> poe table
 }
 \examples{
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
 con <- bigrquery::dbConnect(
   bigrquery::bigquery(),
   project = bigrquery::bq_test_project(),

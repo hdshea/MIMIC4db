@@ -26,7 +26,15 @@ NULL
 #' diagnoses a patient was billed for during their hospital stay using the ICD-9 and ICD-10 ontologies. Diagnoses
 #' are billed on hospital discharge, and are determined by trained persons who read signed clinical notes.
 #'
-#' (PKEY `subject_id`, `hadm_id`, `seq_num`)
+#' Table attributes for diagnoses_icd table:
+#'
+#' (**PKEY** `subject_id`, `hadm_id`, `seq_num`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
+#'
+#' (**FKEY** `icd_code`, `icd_version`) -> d_icd_diagnoses table
 #'
 #' @inheritParams m4_patients
 #'
@@ -34,6 +42,9 @@ NULL
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -47,7 +58,7 @@ NULL
 m4_diagnoses <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("diagnoses_icd"), where) %>%
+  m4_get_from_table(con, "diagnoses_icd", where) %>%
     dplyr::left_join(m4_d_icd_diagnoses(con), by = c("icd_code", "icd_version")) %>%
     dplyr::mutate(diagnosis = long_title) %>%
     dplyr::select(-icd_code, -icd_version, -long_title) %>%
@@ -60,7 +71,13 @@ m4_diagnoses <- function(con, cohort = NULL, ...) {
 #' (DRGs) which are used by the hospital to obtain reimbursement for a patient’s hospital stay. The codes correspond
 #' to the primary reason for a patient’s stay at the hospital.
 #'
-#' (PKEY `subject_id`, `hadm_id`)
+#' Table attributes for drgcodes table:
+#'
+#' (**PKEY** `subject_id`, `hadm_id`, `drg_type`, `drg_code`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
 #'
 #' @inheritParams m4_patients
 #'
@@ -68,6 +85,9 @@ m4_diagnoses <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -81,7 +101,7 @@ m4_diagnoses <- function(con, cohort = NULL, ...) {
 m4_drgcodes <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("drgcodes"), where) %>%
+  m4_get_from_table(con, "drgcodes", where) %>%
     dplyr::arrange(subject_id, hadm_id)
 }
 
@@ -90,7 +110,21 @@ m4_drgcodes <- function(con, cohort = NULL, ...) {
 #' This functions provides base access to the emar table from the hospital module.  These data are
 #' collected by barcode scanning of medications at the time of administration.
 #'
-#' (PKEY `subject_id`, `hadm_id`, `emar_id`, `emar_seq`)
+#' Table attributes for emar table:
+#'
+#' (**PKEY** `emar_id`, `emar_seq`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
+#'
+#' (**FKEY** `emar_id`, `emar_seq`) -> emar_detail table
+#'
+#' (**FKEY** `pharmacy_id`) -> pharmacy table
+#'
+#' (**FKEY** `pharmacy_id`) -> prescriptions table
+#'
+#' (**FKEY** `poe_id`) -> poe table
 #'
 #' @inheritParams m4_patients
 #'
@@ -98,6 +132,9 @@ m4_drgcodes <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -111,7 +148,7 @@ m4_drgcodes <- function(con, cohort = NULL, ...) {
 m4_emar <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("emar"), where) %>%
+  m4_get_from_table(con, "emar", where) %>%
     dplyr::arrange(subject_id, hadm_id, emar_id, emar_seq)
 }
 
@@ -121,7 +158,17 @@ m4_emar <- function(con, cohort = NULL, ...) {
 #' made in the EMAR table. Information includes the associated pharmacy order, the dose due, the dose given,
 #' and many other parameters associated with the medical administration.
 #'
-#' (PKEY `subject_id`, `emar_id`, `emar_seq`, `parent_field_ordinal`)
+#' Table attributes for emar_detail table:
+#'
+#' (**PKEY** `emar_id`, `emar_seq`, `parent_field_ordinal`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `emar_id`, `emar_seq`) -> emar table
+#'
+#' (**FKEY** `pharmacy_id`) -> pharmacy table
+#'
+#' (**FKEY** `pharmacy_id`) -> prescriptions table
 #'
 #' @inheritParams m4_patients
 #'
@@ -129,6 +176,9 @@ m4_emar <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -142,7 +192,7 @@ m4_emar <- function(con, cohort = NULL, ...) {
 m4_emar_detail <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("emar_detail"), where) %>%
+  m4_get_from_table(con, "emar_detail", where) %>%
     dplyr::arrange(subject_id, emar_id, emar_seq, parent_field_ordinal)
 }
 
@@ -151,7 +201,15 @@ m4_emar_detail <- function(con, cohort = NULL, ...) {
 #' This function provides base access to the hcpcsevents table containing data about all billed events occurring
 #' during the hospitalization.
 #'
-#' (PKEY `subject_id`, `hadm_id`)
+#' Table attributes for hcpcsevents table:
+#'
+#' (**PKEY** `subject_id`, `hadm_id`, `seq_num`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
+#'
+#' (**FKEY** `hcpcs_cd`) -> d_hcpcs table
 #'
 #' @inheritParams m4_patients
 #'
@@ -159,6 +217,9 @@ m4_emar_detail <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -172,7 +233,7 @@ m4_emar_detail <- function(con, cohort = NULL, ...) {
 m4_hcpcsevents <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("hcpcsevents"), where) %>%
+  m4_get_from_table(con, "hcpcsevents", where) %>%
     dplyr::select(-short_description) %>%
     dplyr::left_join(m4_d_hcpcs(con), by = c("hcpcs_cd" = "code")) %>%
     dplyr::mutate(code = hcpcs_cd) %>%
@@ -186,7 +247,15 @@ m4_hcpcsevents <- function(con, cohort = NULL, ...) {
 #' of all laboratory measurements made for a single patient. These include hematology measurements,
 #' blood gases, chemistry panels, and less common tests such as genetic assays.
 #'
-#' (PKEY `labevent_id`)
+#' Table attributes for labevents table:
+#'
+#' (**PKEY** `labevent_id`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
+#'
+#' (**FKEY** `itemid`) -> d_labitems table
 #'
 #' @inheritParams m4_patients
 #'
@@ -194,6 +263,9 @@ m4_hcpcsevents <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -207,7 +279,7 @@ m4_hcpcsevents <- function(con, cohort = NULL, ...) {
 m4_labevents <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("labevents"), where) %>%
+  m4_get_from_table(con, "labevents", where) %>%
     dplyr::left_join(m4_d_labitems(con), by = "itemid") %>%
     dplyr::mutate(lab_item = label) %>%
     dplyr::select(
@@ -224,7 +296,13 @@ m4_labevents <- function(con, cohort = NULL, ...) {
 #' which are a common procedure to check for infectious growth and to assess which antibiotic treatments are
 #' most effective.
 #'
-#' (PKEY `microevent_id`)
+#' Table attributes for microbiologyevents table:
+#'
+#' (**PKEY** `microevent_id`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
 #'
 #' @inheritParams m4_patients
 #'
@@ -232,6 +310,9 @@ m4_labevents <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -245,7 +326,7 @@ m4_labevents <- function(con, cohort = NULL, ...) {
 m4_microbiologyevents <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("microbiologyevents"), where) %>%
+  m4_get_from_table(con, "microbiologyevents", where) %>%
     dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
@@ -256,7 +337,19 @@ m4_microbiologyevents <- function(con, cohort = NULL, ...) {
 #' the number of formulary doses, the frequency of dosing, the medication route, and the duration of the
 #' prescription.
 #'
-#' (PKEY `subject_id`, `hadm_id`. `pharmacy_id`)
+#' Table attributes for pharmacy table:
+#'
+#' (**PKEY** `pharmacy_id`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
+#'
+#' (**FKEY** `poe_id`) -> poe table
+#'
+#' (**FKEY** `pharmacy_id`) -> prescriptions table
+#'
+#' (**FKEY** `pharmacy_id`) -> emar table
 #'
 #' @inheritParams m4_patients
 #'
@@ -264,6 +357,9 @@ m4_microbiologyevents <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -277,17 +373,23 @@ m4_microbiologyevents <- function(con, cohort = NULL, ...) {
 m4_pharmacy <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("pharmacy"), where) %>%
+  m4_get_from_table(con, "pharmacy", where) %>%
     dplyr::arrange(subject_id, starttime, hadm_id)
 }
 
 #' Access orders made by providers relating to patient care
 #'
 #' This function provides base access to the poe table containing data pertaining to provider order entry (POE)
-#' whcih is the general interface through which care providers at the hospital enter orders. Most treatments
+#' which is the general interface through which care providers at the hospital enter orders. Most treatments
 #' and procedures must be ordered via POE.
 #'
-#' (PKEY `subject_id`, `hadm_id`. `poe_seq`)
+#' Table attributes for poe table:
+#'
+#' (**PKEY** `poe_id`, `poe_seq`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
 #'
 #' @inheritParams m4_patients
 #'
@@ -295,6 +397,9 @@ m4_pharmacy <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -308,7 +413,7 @@ m4_pharmacy <- function(con, cohort = NULL, ...) {
 m4_poe <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("poe"), where) %>%
+  m4_get_from_table(con, "poe", where) %>%
     dplyr::arrange(subject_id, ordertime, hadm_id, poe_seq)
 }
 
@@ -319,7 +424,13 @@ m4_poe <- function(con, cohort = NULL, ...) {
 #' field_name, and the value is field_value. EAV tables allow for flexible description of entities when the
 #' attributes are heterogenous.
 #'
-#' (PKEY `subject_id`, `hadm_id`. `poe_seq`)
+#' Table attributes for poe_detail table:
+#'
+#' (**PKEY** `poe_id`, `poe_seq`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `poe_id`) -> poe table
 #'
 #' @inheritParams m4_patients
 #'
@@ -327,6 +438,9 @@ m4_poe <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -340,7 +454,7 @@ m4_poe <- function(con, cohort = NULL, ...) {
 m4_poe_detail <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("poe_detail"), where) %>%
+  m4_get_from_table(con, "poe_detail", where) %>%
     dplyr::arrange(subject_id, poe_seq)
 }
 
@@ -350,7 +464,17 @@ m4_poe_detail <- function(con, cohort = NULL, ...) {
 #' Information includes the name of the drug, coded identifiers including the Generic Sequence Number (GSN) and
 #' National Drug Code (NDC), the product strength, the formulary dose, and the route of administration.
 #'
-#' (PKEY `subject_id`, `hadm_id`. `pharmacy_id`)
+#' Table attributes for prescriptions table:
+#'
+#' (**PKEY** `pharmacy_id`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
+#'
+#' (**FKEY** `pharmacy_id`) -> pharmacy table
+#'
+#' (**FKEY** `pharmacy_id`) -> emar table
 #'
 #' @inheritParams m4_patients
 #'
@@ -358,6 +482,9 @@ m4_poe_detail <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -371,7 +498,7 @@ m4_poe_detail <- function(con, cohort = NULL, ...) {
 m4_prescriptions <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("prescriptions"), where) %>%
+  m4_get_from_table(con, "prescriptions", where) %>%
     dplyr::arrange(subject_id, starttime, hadm_id)
 }
 
@@ -380,7 +507,15 @@ m4_prescriptions <- function(con, cohort = NULL, ...) {
 #' This function provides base access to the procedures_icd table containing data which represents a record of
 #' all procedures a patient was billed for during their hospital stay using the ICD-9 and ICD-10 ontologies.
 #'
-#' (PKEY `subject_id`, `hadm_id`. `pharmacy_id`)
+#' Table attributes for procedures_icd table:
+#'
+#' (**PKEY** `subject_id`, `hadm_id`, `seq_num`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
+#'
+#' (**FKEY** `icd_code`, `icd_version`) -> d_icd_procedures table
 #'
 #' @inheritParams m4_patients
 #'
@@ -388,6 +523,9 @@ m4_prescriptions <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -401,7 +539,7 @@ m4_prescriptions <- function(con, cohort = NULL, ...) {
 m4_procedures <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("procedures_icd"), where) %>%
+  m4_get_from_table(con, "procedures_icd", where) %>%
     dplyr::left_join(m4_d_icd_procedures(con), by = c("icd_code", "icd_version")) %>%
     dplyr::mutate(procedure = long_title) %>%
     dplyr::select(-icd_code, -icd_version, -long_title) %>%
@@ -413,7 +551,13 @@ m4_procedures <- function(con, cohort = NULL, ...) {
 #' This function provides base access to the services table containing data that describes the service under which
 #' a patient was admitted.
 #'
-#' (PKEY `subject_id`, `hadm_id`. `pharmacy_id`)
+#' Table attributes for services table:
+#'
+#' (**PKEY** `subject_id`, `hadm_id`, `transfertime`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
 #'
 #' @inheritParams m4_patients
 #'
@@ -421,6 +565,9 @@ m4_procedures <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -435,7 +582,7 @@ m4_services <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
   svclkp <- m4_service_decsriptions()
 
-  m4_get_from_table(con, mimic4_table_name("services"), where) %>%
+  m4_get_from_table(con, "services", where) %>%
     dplyr::arrange(subject_id, transfertime, hadm_id) %>%
     dplyr::group_by(subject_id, hadm_id) %>%
     dplyr::mutate(

@@ -22,9 +22,14 @@ This function provides base access to the patients table containing data that is
 time span of a patient in the database - i.e., there is one unique entry per patient in the database.
 }
 \details{
-(PKEY \code{subject_id})
+Table attributes for patients table:
+
+(\strong{PKEY} \code{subject_id})
 }
 \examples{
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
 con <- bigrquery::dbConnect(
   bigrquery::bigquery(),
   project = bigrquery::bq_test_project(),

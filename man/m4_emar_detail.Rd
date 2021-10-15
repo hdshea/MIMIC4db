@@ -23,9 +23,22 @@ made in the EMAR table. Information includes the associated pharmacy order, the 
 and many other parameters associated with the medical administration.
 }
 \details{
-(PKEY \code{subject_id}, \code{emar_id}, \code{emar_seq}, \code{parent_field_ordinal})
+Table attributes for emar_detail table:
+
+(\strong{PKEY} \code{emar_id}, \code{emar_seq}, \code{parent_field_ordinal})
+
+(\strong{FKEY} \code{subject_id}) -> patients table
+
+(\strong{FKEY} \code{emar_id}, \code{emar_seq}) -> emar table
+
+(\strong{FKEY} \code{pharmacy_id}) -> pharmacy table
+
+(\strong{FKEY} \code{pharmacy_id}) -> prescriptions table
 }
 \examples{
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
 con <- bigrquery::dbConnect(
   bigrquery::bigquery(),
   project = bigrquery::bq_test_project(),

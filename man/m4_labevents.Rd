@@ -23,9 +23,20 @@ of all laboratory measurements made for a single patient. These include hematolo
 blood gases, chemistry panels, and less common tests such as genetic assays.
 }
 \details{
-(PKEY \code{labevent_id})
+Table attributes for labevents table:
+
+(\strong{PKEY} \code{labevent_id})
+
+(\strong{FKEY} \code{subject_id}) -> patients table
+
+(\strong{FKEY} \code{hadm_id}) -> admissions table
+
+(\strong{FKEY} \code{itemid}) -> d_labitems table
 }
 \examples{
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
 con <- bigrquery::dbConnect(
   bigrquery::bigquery(),
   project = bigrquery::bq_test_project(),

@@ -28,7 +28,17 @@ NULL
 #' relevant to their care: ventilator settings, laboratory values, code status, mental status, and so on.
 #' As a result, the bulk of information about a patient’s stay is contained in chartevents.
 #'
-#' (PKEY `subject_id`, `hadm_id`, `stay_id`)
+#' Table attributes for chartevents table:
+#'
+#' (**PKEY** `subject_id`, `hadm_id`, `stay_id`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
+#'
+#' (**FKEY** `stay_id`) -> icustays table
+#'
+#' (**FKEY** `itemid`) -> d_items table, chartevents sub-table
 #'
 #' @param con A [bigrquery::bigquery()] DBIConnection object, as returned by [DBI::dbConnect()]
 #' with an appropriate [bigrquery::bigquery()] DBI driver specified in the call.
@@ -40,6 +50,9 @@ NULL
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -53,7 +66,7 @@ NULL
 m4_chartevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
   where <- combined_where(cohort, itemlist)
 
-  m4_get_from_table(con, mimic4_table_name("chartevents"), where) %>%
+  m4_get_from_table(con, "chartevents", where) %>%
     dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
@@ -65,7 +78,17 @@ m4_chartevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
 #' For example, the date of last dialysis would be in the DATETIMEEVENTS table, but the systolic blood
 #' pressure would not be in this table.
 #'
-#' (PKEY `subject_id`, `hadm_id`, `stay_id`)
+#' Table attributes for datetimeevents table:
+#'
+#' (**PKEY** `subject_id`, `hadm_id`, `stay_id`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
+#'
+#' (**FKEY** `stay_id`) -> icustays table
+#'
+#' (**FKEY** `itemid`) -> d_items table, datetimeevents_items sub-table
 #'
 #' @inheritParams m4_chartevents
 #'
@@ -73,6 +96,9 @@ m4_chartevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -86,16 +112,22 @@ m4_chartevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
 m4_datetimeevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
   where <- combined_where(cohort, itemlist)
 
-  m4_get_from_table(con, mimic4_table_name("datetimeevents"), where) %>%
+  m4_get_from_table(con, "datetimeevents", where) %>%
     dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
-#' Access tracking information for ICU stays including adminission and discharge times
+#' Access tracking information for ICU stays including admissions and discharge times
 #'
 #' This function provides base access to the icustays table containing data which represents the tracking
-#' information for ICU stays including adminission and discharge times.
+#' information for ICU stays including admissions and discharge times.
 #'
-#' (PKEY `subject_id`, `hadm_id`, `stay_id`)
+#' Table attributes for icustays table:
+#'
+#' (**PKEY** `subject_id`, `hadm_id`, `stay_id`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
 #'
 #' @inheritParams m4_chartevents
 #'
@@ -103,6 +135,9 @@ m4_datetimeevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -116,7 +151,7 @@ m4_datetimeevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
 m4_icustays <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("icustays"), where) %>%
+  m4_get_from_table(con, "icustays", where) %>%
     dplyr::arrange(subject_id, intime, hadm_id)
 }
 
@@ -125,7 +160,17 @@ m4_icustays <- function(con, cohort = NULL, ...) {
 #' This function provides base access to the inputevents table containing data representing all information
 #' documented regarding continuous infusions or intermittent administrations.
 #'
-#' (PKEY `subject_id`, `hadm_id`, `stay_id`)
+#' Table attributes for inputevents table:
+#'
+#' (**PKEY** `subject_id`, `hadm_id`, `stay_id`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
+#'
+#' (**FKEY** `stay_id`) -> icustays table
+#'
+#' (**FKEY** `itemid`) -> d_items table, inputevents_items sub-table
 #'
 #' @inheritParams m4_chartevents
 #'
@@ -133,6 +178,9 @@ m4_icustays <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -146,7 +194,7 @@ m4_icustays <- function(con, cohort = NULL, ...) {
 m4_inputevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
   where <- combined_where(cohort, itemlist)
 
-  m4_get_from_table(con, mimic4_table_name("inputevents"), where) %>%
+  m4_get_from_table(con, "inputevents", where) %>%
     dplyr::arrange(subject_id, starttime, hadm_id)
 }
 
@@ -155,7 +203,17 @@ m4_inputevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
 #' This function provides base access to the outputevents table containing data representing all information
 #' regarding patient outputs, for example, urine, drainage, etc.
 #'
-#' (PKEY `subject_id`, `hadm_id`, `stay_id`)
+#' Table attributes for outputevents table:
+#'
+#' (**PKEY** `subject_id`, `hadm_id`, `stay_id`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
+#'
+#' (**FKEY** `stay_id`) -> icustays table
+#'
+#' (**FKEY** `itemid`) -> d_items table, outputevents_items sub-table
 #'
 #' @inheritParams m4_chartevents
 #'
@@ -163,6 +221,9 @@ m4_inputevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -176,7 +237,7 @@ m4_inputevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
 m4_outputevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
   where <- combined_where(cohort, itemlist)
 
-  m4_get_from_table(con, mimic4_table_name("outputevents"), where) %>%
+  m4_get_from_table(con, "outputevents", where) %>%
     dplyr::arrange(subject_id, charttime, hadm_id)
 }
 
@@ -186,7 +247,17 @@ m4_outputevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
 #' They include data on all procedures documented during the ICU stay (e.g. ventilation), though not
 #' necessarily conducted within the ICU (e.g. x-ray imaging).
 #'
-#' (PKEY `subject_id`, `hadm_id`, `stay_id`)
+#' Table attributes for procedureevents table:
+#'
+#' (**PKEY** `subject_id`, `hadm_id`, `stay_id`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
+#'
+#' (**FKEY** `stay_id`) -> icustays table
+#'
+#' (**FKEY** `itemid`) -> d_items table, procedureevents_items sub-table
 #'
 #' @inheritParams m4_chartevents
 #'
@@ -194,6 +265,9 @@ m4_outputevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -207,6 +281,6 @@ m4_outputevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
 m4_procedureevents <- function(con, cohort = NULL, itemlist = NULL, ...) {
   where <- combined_where(cohort, itemlist)
 
-  m4_get_from_table(con, mimic4_table_name("procedureevents"), where) %>%
+  m4_get_from_table(con, "procedureevents", where) %>%
     dplyr::arrange(subject_id, starttime, hadm_id)
 }

@@ -24,9 +24,24 @@ the number of formulary doses, the frequency of dosing, the medication route, an
 prescription.
 }
 \details{
-(PKEY \code{subject_id}, \code{hadm_id}. \code{pharmacy_id})
+Table attributes for pharmacy table:
+
+(\strong{PKEY} \code{pharmacy_id})
+
+(\strong{FKEY} \code{subject_id}) -> patients table
+
+(\strong{FKEY} \code{hadm_id}) -> admissions table
+
+(\strong{FKEY} \code{poe_id}) -> poe table
+
+(\strong{FKEY} \code{pharmacy_id}) -> prescriptions table
+
+(\strong{FKEY} \code{pharmacy_id}) -> emar table
 }
 \examples{
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
 con <- bigrquery::dbConnect(
   bigrquery::bigquery(),
   project = bigrquery::bq_test_project(),

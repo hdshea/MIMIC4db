@@ -4,13 +4,13 @@
 \alias{m4_select_data}
 \title{Basic SELECT statement wrapper returning results in a tibble}
 \usage{
-m4_select_data(con, select_statement)
+m4_select_data(con, select)
 }
 \arguments{
 \item{con}{A \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBIConnection object, as returned by \code{\link[DBI:dbConnect]{DBI::dbConnect()}}
 with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI driver specified in the call.}
 
-\item{select_statement}{a character string representing a SQL \code{SELECT} statement.}
+\item{select}{a character string representing a SQL \code{SELECT} statement.}
 }
 \value{
 a tibble with the results.

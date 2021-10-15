@@ -24,9 +24,16 @@ the admissions table can be considered as a definition table for \code{hadm_id}.
 timing information for admission and discharge, demographic information, the source of the admission, and so on.
 }
 \details{
-(PKEY \code{hadm_id})
+Table attributes for admissions table:
+
+(\strong{PKEY} \code{hadm_id})
+
+(\strong{FKEY} \code{subject_id}) -> patients table
 }
 \examples{
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
 con <- bigrquery::dbConnect(
   bigrquery::bigquery(),
   project = bigrquery::bq_test_project(),

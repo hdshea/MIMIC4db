@@ -25,7 +25,9 @@ NULL
 #' This function provides base access to the patients table containing data that is consistent for the
 #' time span of a patient in the database - i.e., there is one unique entry per patient in the database.
 #'
-#' (PKEY `subject_id`)
+#' Table attributes for patients table:
+#'
+#' (**PKEY** `subject_id`)
 #'
 #' @param con A [bigrquery::bigquery()] DBIConnection object, as returned by [DBI::dbConnect()]
 #' with an appropriate [bigrquery::bigquery()] DBI driver specified in the call.
@@ -36,6 +38,9 @@ NULL
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -49,7 +54,7 @@ NULL
 m4_patients <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("patients"), where) %>%
+  m4_get_from_table(con, "patients", where) %>%
     dplyr::arrange(subject_id)
 }
 
@@ -60,7 +65,11 @@ m4_patients <- function(con, cohort = NULL, ...) {
 #' the admissions table can be considered as a definition table for `hadm_id`. Information available includes
 #' timing information for admission and discharge, demographic information, the source of the admission, and so on.
 #'
-#' (PKEY `hadm_id`)
+#' Table attributes for admissions table:
+#'
+#' (**PKEY** `hadm_id`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
 #'
 #' @inheritParams m4_patients
 #'
@@ -68,6 +77,9 @@ m4_patients <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -81,16 +93,23 @@ m4_patients <- function(con, cohort = NULL, ...) {
 m4_admissions <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("admissions"), where) %>%
+  m4_get_from_table(con, "admissions", where) %>%
     dplyr::arrange(subject_id, admittime, hadm_id)
 }
 
 #' Access patient movement from bed to bed within the hospital, including ICU admission and discharge
 #'
-#' This function provides base access to the transfer table containing information about the physical locations
+#' This function provides base access to the transfers table containing information about the physical locations
 #' for patients throughout their hospital stay.
 #'
-#' (PKEY `subject_id`, `hadm_id`, `transfer_id`)
+#' Table attributes for transfers table:
+#'
+#' (**PKEY** `subject_id`, `hadm_id`, `transfer_id`)
+#'
+#' (**FKEY** `subject_id`) -> patients table
+#'
+#' (**FKEY** `hadm_id`) -> admissions table
+#'
 #'
 #' @inheritParams m4_patients
 #'
@@ -98,6 +117,9 @@ m4_admissions <- function(con, cohort = NULL, ...) {
 #' @export
 #'
 #' @examples
+#' # To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+#' # variable set to name of project which has billing set up and to which
+#' # you have write access.
 #' con <- bigrquery::dbConnect(
 #'   bigrquery::bigquery(),
 #'   project = bigrquery::bq_test_project(),
@@ -111,6 +133,6 @@ m4_admissions <- function(con, cohort = NULL, ...) {
 m4_transfers <- function(con, cohort = NULL, ...) {
   where <- cohort_where(cohort)
 
-  m4_get_from_table(con, mimic4_table_name("transfers"), where) %>%
+  m4_get_from_table(con, "transfers", where) %>%
     dplyr::arrange(subject_id, intime, hadm_id)
 }

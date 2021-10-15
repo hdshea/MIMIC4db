@@ -19,13 +19,22 @@ a tibble with the results.
 }
 \description{
 This function provides base access to the poe table containing data pertaining to provider order entry (POE)
-whcih is the general interface through which care providers at the hospital enter orders. Most treatments
+which is the general interface through which care providers at the hospital enter orders. Most treatments
 and procedures must be ordered via POE.
 }
 \details{
-(PKEY \code{subject_id}, \code{hadm_id}. \code{poe_seq})
+Table attributes for poe table:
+
+(\strong{PKEY} \code{poe_id}, \code{poe_seq})
+
+(\strong{FKEY} \code{subject_id}) -> patients table
+
+(\strong{FKEY} \code{hadm_id}) -> admissions table
 }
 \examples{
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
 con <- bigrquery::dbConnect(
   bigrquery::bigquery(),
   project = bigrquery::bq_test_project(),

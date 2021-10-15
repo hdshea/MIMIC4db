@@ -24,9 +24,22 @@ This function provides base access to the outputevents table containing data rep
 regarding patient outputs, for example, urine, drainage, etc.
 }
 \details{
-(PKEY \code{subject_id}, \code{hadm_id}, \code{stay_id})
+Table attributes for outputevents table:
+
+(\strong{PKEY} \code{subject_id}, \code{hadm_id}, \code{stay_id})
+
+(\strong{FKEY} \code{subject_id}) -> patients table
+
+(\strong{FKEY} \code{hadm_id}) -> admissions table
+
+(\strong{FKEY} \code{stay_id}) -> icustays table
+
+(\strong{FKEY} \code{itemid}) -> d_items table, outputevents_items sub-table
 }
 \examples{
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
 con <- bigrquery::dbConnect(
   bigrquery::bigquery(),
   project = bigrquery::bq_test_project(),

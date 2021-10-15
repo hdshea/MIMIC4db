@@ -18,13 +18,22 @@ with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI 
 a tibble with the results.
 }
 \description{
-This function provides base access to the transfer table containing information about the physical locations
+This function provides base access to the transfers table containing information about the physical locations
 for patients throughout their hospital stay.
 }
 \details{
-(PKEY \code{subject_id}, \code{hadm_id}, \code{transfer_id})
+Table attributes for transfers table:
+
+(\strong{PKEY} \code{subject_id}, \code{hadm_id}, \code{transfer_id})
+
+(\strong{FKEY} \code{subject_id}) -> patients table
+
+(\strong{FKEY} \code{hadm_id}) -> admissions table
 }
 \examples{
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
 con <- bigrquery::dbConnect(
   bigrquery::bigquery(),
   project = bigrquery::bq_test_project(),

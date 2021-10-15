@@ -27,14 +27,12 @@ NULL
 
 #' Access combined patient and admissions data.
 #'
-#' The function calculates as part of the data frame
-#' length of stay in the hospital in days (`los_hospital`) and age at admission in years (`admission_age`).
-#' Patients who are older than 89 years old at any time in the database have had their date of birth
-#' shifted to obscure their age and comply with HIPAA.  These ages appear in the data as >= 300.
-#' As such, an additional field is added to categorize age into decades (`admission_decade`).
-#' Patients older than 89 show up in the 90 and older age decade bucket.
-#'
-#' This is patterned off the `icustay_detail` SQL in the mimic-code github repository referenced above.
+#' This function combines data from the patients with matching data from the admissions table.  The function
+#' calculates additional common pattern data like length of stay in the hospital in days (`los_hospital`) and
+#' age at admission in years (`admission_age`).  Patients who are older than 89 years old at any time in the
+#' database have had their date of birth shifted to obscure their age and comply with HIPAA.  These ages
+#' appear in the data as = 91.  As such, an additional field is added to categorize age into decades
+#' (`admission_decade`).  Patients older than 89 show up in the 90 and older age decade bucket.
 #'
 #' @inheritParams m4_patients
 #'
@@ -57,7 +55,15 @@ m4_patient_admissions <- function(con, cohort = NULL, ...) {
     dplyr::left_join(m4_patients(con, cohort), by = "subject_id") %>%
     dplyr::mutate(
       los_hospital = lubridate::time_length(difftime(dischtime, admittime), "days"),
-      admission_age = anchor_age,
+      admission_age =
+        round(
+          lubridate::time_length(
+            difftime(admittime, ISOdate(anchor_year, 1, 1, 0, 0, 0)),
+            "years"
+          ) +
+            anchor_age,
+          2
+        ),
       admission_decade = Hmisc::cut2(admission_age, c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)),
       ethnicity_group =
         dplyr::case_when(
@@ -99,10 +105,8 @@ m4_patient_admissions <- function(con, cohort = NULL, ...) {
 
 #' Access combined patient, admission and icu stay data.
 #'
-#' This includes all of the information from the `mimic_get_patient_admissions` function plus addition
-#' data on icu stays while in the hospital.
-#'
-#' This is patterned off the `icustay_detail` SQL in the mimic-code github repository referenced above.
+#' This includes all of the information from the `mimic_get_patient_admissions` function plus additional
+#' data pertaining to individual ICU stays while in the hospital.
 #'
 #' @inheritParams m4_patients
 #'

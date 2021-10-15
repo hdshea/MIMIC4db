@@ -12,23 +12,26 @@ with an appropriate \code{\link[bigrquery:bigquery]{bigrquery::bigquery()}} DBI 
 
 \item{table}{a character string representing a valid MIMIC-IV table name.}
 
-\item{where}{a character string representing a SQL \code{WHERE} clause.}
+\item{where}{an optional character string representing a SQL \code{WHERE} clause.}
 }
 \value{
 a tibble with the results.
 }
 \description{
-Helper function to perform a basic \code{SELECT *} from the noted table projected down by the optional
+Function to perform a basic \code{SELECT *} from the noted table projected down by the optional
 where clause.
 }
 \examples{
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
 con <- bigrquery::dbConnect(
   bigrquery::bigquery(),
   project = bigrquery::bq_test_project(),
   quiet = TRUE
 )
 
-m4_get_from_table(con, "physionet-data.mimic_icu.d_items", where = "where itemid <= 220048")
+m4_get_from_table(con, "d_items", where = "where itemid <= 220048")
 
 bigrquery::dbDisconnect(con)
 }

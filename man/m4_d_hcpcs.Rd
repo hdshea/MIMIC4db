@@ -20,9 +20,14 @@ This function provides base access to the d_hcpcs table which defines concepts r
 table in the hospital module.
 }
 \details{
-(PKEY \code{code})
+Table attributes for d_hcpcs table:
+
+(\strong{PKEY} \code{code}) reference data for hcpcsevents table
 }
 \examples{
+# To run examples, you must have the BIGQUERY_TEST_PROJECT environment
+# variable set to name of project which has billing set up and to which
+# you have write access.
 con <- bigrquery::dbConnect(
   bigrquery::bigquery(),
   project = bigrquery::bq_test_project(),
